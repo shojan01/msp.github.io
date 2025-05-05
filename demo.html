@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Demo Login con Facebook</title>
+</head>
+<body>
+  <h1>Demostración de Login con Facebook</h1>
+
+  <fb:login-button 
+    scope="public_profile,email,business_management"
+    onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <div id="status"></div>
+  <div id="details"></div>
+
+  <script>
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    function statusChangeCallback(response) {
+      if (response.status === 'connected') {
+        document.getElementById('status').innerText = 'Sesión iniciada con éxito. Obteniendo datos...';
+
+        // 1. Obtener nombre y correo
+        FB.api('/me', { fields: 'name,email' }, function(response) {
+          document.getElementById('details').innerHTML = 
+            '<strong>Nombre:</strong> ' + response.name + '<br>' +
+            '<strong>Email:</strong> ' + response.email + '<br><br>';
+        });
+
+        // 2. Obtener ID de empresa (requiere business_management)
+        FB.api('/me/businesses', function(response) {
+          if (response && !response.error) {
+            if (response.data.length > 0) {
+              document.getElementById('details').innerHTML += 
+                '<strong>Negocios:</strong><br>' +
+                response.data.map(b => '• ' + b.name + ' (ID: ' + b.id + ')').join('<br>');
+            } else {
+              document.getElementById('details').innerHTML += 'No hay empresas asociadas a esta cuenta.';
+            }
+          } else {
+            document.getElementById('details').innerHTML += 'Error al consultar /me/businesses: ' + JSON.stringify(response.error);
+          }
+        });
+
+      } else {
+        document.getElementById('status').innerText = 'Por favor inicia sesión con Facebook.';
+      }
+    }
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : 1243368410218490
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v20.0'
+      });
+
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) { return; }
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/es_ES/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+</body>
+</html>

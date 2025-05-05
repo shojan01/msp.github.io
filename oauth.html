@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo Login con Facebook</title>
+  <meta charset="UTF-8">
+  <script>
+    let accessToken = '';
+
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: 'TU_APP_ID', // Reemplaza con tu App ID
+        cookie: true,
+        xfbml: true,
+        version: 'v20.0'
+      });
+    };
+
+    function login() {
+      FB.login(function (response) {
+        if (response.authResponse) {
+          accessToken = response.authResponse.accessToken;
+          document.getElementById('token').textContent = accessToken;
+          fetchBusinessInfo();
+        } else {
+          console.log('Login cancelado o sin autorización');
+        }
+      }, {
+        scope: 'public_profile,email,business_management,whatsapp_business_management,whatsapp_business_messaging',
+        return_scopes: true
+      });
+    }
+
+    async function fetchBusinessInfo() {
+      const businessRes = await fetch(`https://graph.facebook.com/v20.0/me/businesses?access_token=${accessToken}`);
+      const businessData = await businessRes.json();
+      document.getElementById('business').textContent = JSON.stringify(businessData, null, 2);
+
+      if (businessData.data && businessData.data.length > 0) {
+        const businessId = businessData.data[0].id;
+        const waRes = await fetch(`https://graph.facebook.com/v20.0/${businessId}/owned_whatsapp_business_accounts?access_token=${accessToken}`);
+        const waData = await waRes.json();
+        document.getElementById('whatsapp').textContent = JSON.stringify(waData, null, 2);
+
+        if (waData.data && waData.data.length > 0) {
+          const waId = waData.data[0].id;
+          const phoneRes = await fetch(`https://graph.facebook.com/v20.0/${waId}/phone_numbers?access_token=${accessToken}`);
+          const phoneData = await phoneRes.json();
+          document.getElementById('phones').textContent = JSON.stringify(phoneData, null, 2);
+        }
+      }
+    }
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+</head>
+<body>
+  <h1>Demo de Login con Facebook</h1>
+  <button onclick="login()">Login con Facebook</button>
+
+  <h3>Access Token:</h3>
+  <pre id="token" style="background:#f9f9f9; padding:10px;"></pre>
+
+  <h3>Negocios asociados (me/businesses):</h3>
+  <pre id="business" style="background:#f0f0f0; padding:10px;"></pre>
+
+  <h3>Cuentas de WhatsApp (owned_whatsapp_business_accounts):</h3>
+  <pre id="whatsapp" style="background:#f0f0f0; padding:10px;"></pre>
+
+  <h3>Números telefónicos (phone_numbers):</h3>
+  <pre id="phones" style="background:#f0f0f0; padding:10px;"></pre>
+
+  <p style="max-width: 600px; font-size: 14px; background: #f0f0f0; padding: 10px; border-left: 4px solid #1877f2;">
+    <strong>Note for Facebook Reviewer:</strong><br>
+    This page demonstrates the Facebook login flow for our <b>desktop application</b>. After login, it requests permissions like <code>business_management</code> and retrieves business and WhatsApp data using the Graph API. The final access token and Graph API results are displayed for your review.
+  </p>
+</body>
+</html>

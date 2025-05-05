@@ -1,1 +1,14 @@
-<meta http-equiv="refresh" content="5;url=http://localhost:5050/">
+<script>
+    // Obtener parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    
+    // Obtener el valor de "code"
+    const code = params.get("code");
+
+  // Verificamos si existe
+    if (code) {
+      // Redireccionar con el código en la nueva URL
+      const nuevaURL = `url=http://localhost:5050/?code=${encodeURIComponent(code)}`;
+      window.location.href = nuevaURL;
+    }
+</script>

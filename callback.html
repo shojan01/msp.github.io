@@ -10,7 +10,7 @@
 
       if (queryString) {
         // Redirigir incluyendo todos los parámetros recibidos
-        location.replace(`http://localhost:5050/?${queryString}`);
+        location.replace(`http://localhost:5050/${window.location.search}`);
       } else {
         document.write("No se encontraron parámetros en la URL.");
       }

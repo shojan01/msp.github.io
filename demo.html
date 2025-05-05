@@ -38,7 +38,7 @@
           if (response && !response.error) {
             if (response.data.length > 0) {
               document.getElementById('details').innerHTML += 
-                '<strong>Negocios:</strong><br>' +
+                '<strong>Negocios:</strong><br><br><br>' +
                 response.data.map(b => '• ' + b.name + ' (ID: ' + b.id + ')').join('<br>');
             } else {
               document.getElementById('details').innerHTML += 'No hay empresas asociadas a esta cuenta.';

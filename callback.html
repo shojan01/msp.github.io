@@ -5,15 +5,7 @@
   <title>Redireccionando...</title>
   <script>
     (function() {
-      const params = new URLSearchParams(window.location.search);
-      const queryString = params.toString(); // Todos los parámetros como cadena
-
-      if (queryString) {
-        // Redirigir incluyendo todos los parámetros recibidos
-        location.replace(`http://localhost:5050/${window.location.search}`);
-      } else {
-        document.write("No se encontraron parámetros en la URL.");
-      }
+      location.replace(`http://localhost:5050/${window.location.search}`);
     })();
   </script>
 </head>

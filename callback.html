@@ -8,7 +8,7 @@
   // Verificamos si existe
     if (code) {
       // Redireccionar con el código en la nueva URL
-      const nuevaURL = `url=http://localhost:5050/?code=${encodeURIComponent(code)}`;
+      const nuevaURL = `url=http://localhost:5050/code=${encodeURIComponent(code)}`;
       window.location.href = nuevaURL;
     }
 </script>

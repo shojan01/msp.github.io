@@ -14,7 +14,14 @@
         version: 'v20.0'
       });
     };
-
+    <fb:login-button 
+    scope="public_profile,email,business_management,whatsapp_business_management,whatsapp_business_messaging"
+    onlogin="login();">
+    </fb:login-button>
+  
+    <div id="status"></div>
+    <div id="details"></div>
+    
     function login() {
       FB.login(function (response) {
         if (response.authResponse) {
@@ -24,9 +31,6 @@
         } else {
           console.log('Login cancelado o sin autorización');
         }
-      }, {
-        scope: 'public_profile,email,business_management,whatsapp_business_management,whatsapp_business_messaging',
-        return_scopes: true
       });
     }
 

@@ -2,15 +2,7 @@
 <html>
 <head>
   <title>Demo Login con Facebook</title>
-  <meta charset="UTF-8">
-   <fb:login-button
-    scope="public_profile,email,business_management,whatsapp_business_management,whatsapp_business_messaging"
-    onlogin="login();">
-    </fb:login-button>
-  
-    <div id="status"></div>
-    <div id="details"></div>
-    
+  <meta charset="UTF-8">  
   <script>
     let accessToken = '';
     window.fbAsyncInit = function () {
@@ -64,8 +56,14 @@
   </script>
 </head>
 <body>
-  <h1>Demo de Login con Facebook</h1>
-  <button onclick="login()">Login con Facebook</button>
+  <h1>Demo Login with Facebook Microsip</h1>
+ <fb:login-button
+    scope="public_profile,email,business_management,whatsapp_business_management,whatsapp_business_messaging"
+    onlogin="login();">
+ </fb:login-button>
+  
+    <div id="status"></div>
+    <div id="details"></div>
 
   <h3>Access Token:</h3>
   <pre id="token" style="background:#f9f9f9; padding:10px;"></pre>
@@ -81,7 +79,7 @@
 
   <p style="max-width: 600px; font-size: 14px; background: #f0f0f0; padding: 10px; border-left: 4px solid #1877f2;">
     <strong>Note for Facebook Reviewer:</strong><br>
-    This page demonstrates the Facebook login flow for our <b>desktop application</b>. After login, it requests permissions like <code>business_management</code> and retrieves business and WhatsApp data using the Graph API. The final access token and Graph API results are displayed for your review.
+    This page demonstrates the Facebook login flow for our <b>desktop application (Microsip ERP)</b>. After login, it requests permissions like <code>business_management</code> and retrieves business and WhatsApp data using the Graph API. The final access token and Graph API results are displayed for your review.
   </p>
 </body>
 </html>

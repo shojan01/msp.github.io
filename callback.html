@@ -9,7 +9,7 @@
       const code = params.get("code");
 
       if (code) {
-        location.replace(`http://localhost:5050/code=${encodeURIComponent(code)}`);
+        location.replace(`http://localhost:5050/?code=${encodeURIComponent(code)}`);
       } else {
         // Solo mostramos algo si no hay parámetro
         document.write("No se encontró el parámetro 'code'.");

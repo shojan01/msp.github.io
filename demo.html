@@ -2,10 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Demo Login con Facebook</title>
+  <title>Demo Login with Facebook</title>
 </head>
 <body>
-  <h1>Demostración de Login con Facebook</h1>
+  <p style="max-width: 600px; font-size: 14px; background: #f0f0f0; padding: 10px; border-left: 4px solid #1877f2;">
+    Login demo with Facebook
+  </p>
 
   <fb:login-button 
     scope="public_profile,email,business_management"
@@ -74,5 +76,10 @@
        fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+
+  <p style="max-width: 600px; font-size: 14px; background: #f0f0f0; padding: 10px; border-left: 4px solid #1877f2;">
+  <strong>Note for the Facebook reviewer:</strong><br>
+  This page demonstrates the authentication flow of our <b>desktop</b> app. The process starts with this Facebook Login button, requesting permissions (such as <code>business_management</code>), and once authenticated, the app redirects to an intermediate endpoint (online) which then forwards the data to the installed application on the user's machine. The data shown here is retrieved using the <code>access_token</code> provided by the login.
+</p>
 </body>
 </html>

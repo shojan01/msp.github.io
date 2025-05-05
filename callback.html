@@ -6,14 +6,13 @@
   <script>
     (function() {
       const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
+      const queryString = params.toString(); // Todos los parámetros como cadena
 
-      if (code) {
-        location.replace(`http://localhost:5050/?code=${code}`);
+      if (queryString) {
+        // Redirigir incluyendo todos los parámetros recibidos
+        location.replace(`https://ejemplo.com/destino?${queryString}`);
       } else {
-        // Solo mostramos algo si no hay parámetro
-        document.write("No se encontró el parámetro 'code'.");
-      }
+        document.write("No se encontraron parámetros en la URL.");
     })();
   </script>
 </head>

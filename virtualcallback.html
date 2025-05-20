@@ -6,8 +6,12 @@
   <script>
     (function() {
       const params = new URLSearchParams(window.location.search);
-      const state = params.get("state"); // state trae el redirect en 
-      location.replace(`${state+window.location.search}`);
+      const state = params.get("state"); 
+      if (state != '') {
+        location.replace(`${state+window.location.search}`);
+      } else {
+        location.replace("https://microsip.com");
+      }
     })();
   </script>
 </head>

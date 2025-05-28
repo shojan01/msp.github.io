@@ -22,7 +22,7 @@
           xmlHttp.open( "GET", "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/UploadFileServlet", false ); // false for synchronous request
           xmlHttp.send( null );
           document.getElementById('ua').innerText = xmlHttp.responseText;*/
-        function httpGetAsync(theUrl, callback)
+        function httpGetAsync()
         {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() { 
@@ -31,7 +31,7 @@
                 else
                   document.getElementById('ua').innerText = xmlHttp.status + " "+xmlHttp.responseText;
             }
-            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+            xmlHttp.open("GET", "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/UploadFileServlet", true); // true for asynchronous 
         }
      // }
     )();

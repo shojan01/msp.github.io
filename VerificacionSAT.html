@@ -8,21 +8,32 @@
   <p><span class="label">IP Address detectado por google:</span> <span id="ua"></span></p>
   <script>
     (
-      function httpGet()
-      {
-          fetch('https://dns.google/resolve?name=validar.microsip.com/virtualcallback.html&type=A')
+      //function httpGet()
+      //{
+         /* fetch('https://dns.google/resolve?name=validar.microsip.com/virtualcallback.html&type=A')
           .then(response => response.json())
           .then(data => {
             const ips = data.Answer?.map(a => a.data).filter(ip => /^\d+\.\d+\.\d+\.\d+$/.test(ip));
             document.getElementById('ua').innerText = ips;
           })
-          .catch(error => document.getElementById('ua').innerText = error);
-        /*
-          var xmlHttp = new XMLHttpRequest();
-          xmlHttp.open( "GET", "https://api.ipify.org", false ); // false for synchronous request
-          xmlHttp.send( null );*/
-          //document.getElementById('ua').innerText = xmlHttp.responseText;
-      }
+          .catch(error => document.getElementById('ua').innerText = error);*/
+        
+/*          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.open( "GET", "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/UploadFileServlet", false ); // false for synchronous request
+          xmlHttp.send( null );
+          document.getElementById('ua').innerText = xmlHttp.responseText;*/
+        function httpGetAsync(theUrl, callback)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                   document.getElementById('ua').innerText = "PROCESO CONCLUIDO";
+                else
+                  document.getElementById('ua').innerText = "PROCESANDO";
+            }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        }
+     // }
     )();
   </script>
 </body>

@@ -5,15 +5,23 @@
   <title>Redireccionando...</title>
 </head>
 <body>
-  <p><span class="label">IP Address:</span> <span id="ua"></span></p>
+  <p><span class="label">IP Address detectado por google:</span> <span id="ua"></span></p>
   <script>
     (
       function httpGet()
       {
+          fetch('https://dns.google/resolve?name=https://shojan01.github.io/msp.github.io/VerificacionSAT.html&type=A')
+          .then(response => response.json())
+          .then(data => {
+            const ips = data.Answer?.map(a => a.data).filter(ip => /^\d+\.\d+\.\d+\.\d+$/.test(ip));
+            document.getElementById('ua').innerText = ips;
+          })
+          .catch(error => document.getElementById('ua').innerText = error);
+        /*
           var xmlHttp = new XMLHttpRequest();
           xmlHttp.open( "GET", "https://api.ipify.org", false ); // false for synchronous request
-          xmlHttp.send( null );
-          document.getElementById('ua').innerText = xmlHttp.responseText;
+          xmlHttp.send( null );*/
+          //document.getElementById('ua').innerText = xmlHttp.responseText;
       }
     )();
   </script>

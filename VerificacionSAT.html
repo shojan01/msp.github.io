@@ -31,6 +31,9 @@
                 else
                   document.getElementById('ua').innerText = xmlHttp.status + " "+xmlHttp.responseText;
             }
+            xmlHttp.error = function() { 
+                  document.getElementById('ua').innerText = "PROCESANDO: "+xmlHttp.responseText;
+            }
             xmlHttp.open("GET", "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/UploadFileServlet", true); // true for asynchronous 
         }
      // }

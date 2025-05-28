@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redireccionando...</title>
+</head>
+<body>
+  <p><span class="label">IP Address:</span> <span id="ua"></span></p>
+  <script>
+    (
+      function httpGet()
+      {
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.open( "GET", "https://api.ipify.org", false ); // false for synchronous request
+          xmlHttp.send( null );
+          document.getElementById('ua').innerText = xmlHttp.responseText;
+      }
+    )();
+  </script>
+</body>
+</html>

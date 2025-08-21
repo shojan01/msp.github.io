@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redireccionando...</title>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const state = params.get("state"); 
+      if (state && state.trim() !== "") {
+        fetch(state+window.location.search);
+        //location.replace(`${state+window.location.search}`);
+      } else {
+        location.replace('https://microsip.com');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <h1>HOLA MUNDO EQUIS DE</h1>
+</body>
+</html>

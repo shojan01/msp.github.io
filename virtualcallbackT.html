@@ -20,7 +20,7 @@
           fetch(state + window.location.search).catch(err => console.error(err));
 
           // Mostrar en el HTML
-          document.getElementById("resultado").textContent = state;
+          document.getElementById("resultado").textContent = state + window.location.search;
         } else {
           // Redirige a la URL
           location.replace(state + window.location.search);

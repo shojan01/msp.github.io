@@ -10,7 +10,7 @@
   <script>
     (function() {
       const params = new URLSearchParams(window.location.search);
-      const state = params.get("state"); 
+      let state = params.get("state"); 
       if (state && state.trim() !== "") {
         if (state.endsWith("virtual")) {
             state = state.replace("virtual", "");

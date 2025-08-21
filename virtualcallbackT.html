@@ -13,9 +13,9 @@
       const state = params.get("state"); 
       if (state && state.trim() !== "") {
         if (state.endsWith("virtual")) {
-            console.log('entro aqui');
             state = state.replace("virtual", "");
             fetch(state+window.location.search);
+            console.log(state+window.location.search);
             document.getElementById("resultado").textContent = state;
         } else{
             console.log('hola mundo');

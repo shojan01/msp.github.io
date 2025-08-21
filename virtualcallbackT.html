@@ -12,10 +12,10 @@
       const params = new URLSearchParams(window.location.search);
       const state = params.get("state"); 
       if (state && state.trim() !== "") {
-        if (str.endsWith("virtual")) {
-            str = str.replace("virtual", "");
+        if (state.endsWith("virtual")) {
+            state = state.replace("virtual", "");
             fetch(state+window.location.search);
-            document.getElementById("resultado").textContent = str;
+            document.getElementById("resultado").textContent = state;
         } else{
             location.replace(`${state+window.location.search}`);
         }

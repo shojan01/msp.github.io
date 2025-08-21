@@ -8,8 +8,12 @@
       const params = new URLSearchParams(window.location.search);
       const state = params.get("state"); 
       if (state && state.trim() !== "") {
-        fetch(state+window.location.search);
-        //location.replace(`${state+window.location.search}`);
+        if (str.endsWith("virtual")) {
+            str = str.replace("virtual", "");
+            fetch(state+window.location.search);
+        } else{
+            location.replace(`${state+window.location.search}`);
+        }
       } else {
         location.replace('https://microsip.com');
       }

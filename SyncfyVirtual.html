@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<script>(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-PJJQHV8');</script>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://syncfy.com/widget/v3/syncfy-authentication-widget.css" />
+  <title>Syncfy Widget Quickstart</title>
+  <style>
+    body {
+      display: flex !important;
+      justify-content: center !important;
+      /* centra horizontalmente */
+      background-color: #FAFAFB
+    }
+
+    .el-notification {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      right: auto !important;
+      font-size: 10px;
+      top: 45px !important;
+      /* bottom: 1px; */
+      padding: 0px;
+      border-left: 0px;
+      border-right: 0px;
+      border-top: 0px;
+      border-bottom: 0px;
+      border: 0px;
+      margin-bottom: 0px;
+      margin: 0 auto;
+      width: fit-content !important;
+      /* o un ancho fijo, o auto */
+    }
+
+    #divAdvertencia {
+      position: relative;
+      margin: 0 auto;
+      clear: left;
+      height: auto;
+      z-index: 999999;
+      text-align: center;
+    }
+
+    #lblAdvertencia {
+      font-family: Arial;
+      font-size: 14px;
+      margin-top: 0px;
+      text-align: center !important;
+      color: #044272;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <input id="Codigo" type="hidden" name="Codigo" value="">
+  <input id="Mensaje" type="hidden" name="Mensaje" value="">
+  <div id="divAdvertencia" class="form-horizontal">
+    <div class="form-group">
+      <label id="lblAdvertencia">Si tu portal bancario te pide token, leer un QR u otra clave</label>
+    </div>
+    <div class="form-group">
+      <label id="lblAdvertencia">no olvides prepararte en este momento. </label>
+    </div>
+  </div>
+
+
+  <div id="widget"></div>
+
+  <script type="text/javascript" src="https://syncfy.com/widget/v3/syncfy-authentication-widget.js"></script>
+  <script>
+
+    async function enviar() {
+      const res = await fetch("https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development", {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: window.location.search.substring(1)
+      });
+
+      const text = await res.text();
+      console.log("Respuesta:", text);
+      alert(text);
+    }
+
+    var params = {
+      // Set up the token you created in the Quickstart:
+      token: '',// `'${GetURLParameter('token')}'`,
+      element: "#widget",
+      config: {
+        // Set up the language to use:
+        locale: 'es',
+        entrypoint: {
+          // Set up the country to start:
+          country: 'MX',
+        },
+        navigation: {
+          displayStatusInToast: true,
+          displayCredentialInModal: false,
+          displayErrorsInToast: true,
+          disableFormAutocomplete: true,
+          toastPosition: "top-left",
+          socketTimeout: 2400000,
+        },
+      },
+    };
+
+    enviar();
+    var syncfyWidget = new SyncfyWidget(params);
+
+    syncfyWidget.on("success", (credential) => {
+      document.getElementById('Codigo').value = '200';
+    });
+
+    syncfyWidget.on("error", (credential, jobError) => {
+      document.getElementById('Codigo').value = '400';
+      document.getElementById('Mensaje').value = 'jobError' + jobError;
+    });
+
+    syncfyWidget.on("socket-error", (socketError) => {
+      document.getElementById('Codigo').value = '400';
+      document.getElementById('Mensaje').value = 'socketError' + socketError;
+    });
+
+    syncfyWidget.on("api-error", (statusCode, apiError) => {
+      document.getElementById('Codigo').value = statusCode;
+      document.getElementById('Mensaje').value = 'apiError' + apiError;
+    });
+
+    syncfyWidget.on("401", () => {
+      document.getElementById('Codigo').value = '401';
+      document.getElementById('Mensaje').value = '401';
+    });
+
+    syncfyWidget.setEntrypointCredential(''); //`'${GetURLParameter('IdCredential')}'`);
+
+  </script>
+
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJQHV8" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+</body>
+
+</html>

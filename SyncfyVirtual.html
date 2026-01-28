@@ -85,61 +85,59 @@
       }
 
       const data = await res.json();
-      return data;
+
+      var params = {
+        // Set up the token you created in the Quickstart:
+        token: data.token,// `'${GetURLParameter('token')}'`,
+        element: "#widget",
+        config: {
+          // Set up the language to use:
+          locale: 'es',
+          entrypoint: {
+            // Set up the country to start:
+            country: 'MX',
+          },
+          navigation: {
+            displayStatusInToast: true,
+            displayCredentialInModal: false,
+            displayErrorsInToast: true,
+            disableFormAutocomplete: true,
+            toastPosition: "top-left",
+            socketTimeout: 2400000,
+          },
+        },
+      };
+
+      var syncfyWidget = new SyncfyWidget(params);
+
+      syncfyWidget.on("success", (credential) => {
+        document.getElementById('Codigo').value = '200';
+      });
+
+      syncfyWidget.on("error", (credential, jobError) => {
+        document.getElementById('Codigo').value = '400';
+        document.getElementById('Mensaje').value = 'jobError' + jobError;
+      });
+
+      syncfyWidget.on("socket-error", (socketError) => {
+        document.getElementById('Codigo').value = '400';
+        document.getElementById('Mensaje').value = 'socketError' + socketError;
+      });
+
+      syncfyWidget.on("api-error", (statusCode, apiError) => {
+        document.getElementById('Codigo').value = statusCode;
+        document.getElementById('Mensaje').value = 'apiError' + apiError;
+      });
+
+      syncfyWidget.on("401", () => {
+        document.getElementById('Codigo').value = '401';
+        document.getElementById('Mensaje').value = '401';
+      });
+
+      syncfyWidget.setEntrypointCredential(data.idCredential); //'${GetURLParameter('IdCredential')}'`);
     }
 
-    var data = await enviar();
-
-    var params = {
-      // Set up the token you created in the Quickstart:
-      token: data.token,// `'${GetURLParameter('token')}'`,
-      element: "#widget",
-      config: {
-        // Set up the language to use:
-        locale: 'es',
-        entrypoint: {
-          // Set up the country to start:
-          country: 'MX',
-        },
-        navigation: {
-          displayStatusInToast: true,
-          displayCredentialInModal: false,
-          displayErrorsInToast: true,
-          disableFormAutocomplete: true,
-          toastPosition: "top-left",
-          socketTimeout: 2400000,
-        },
-      },
-    };
-
-    var syncfyWidget = new SyncfyWidget(params);
-
-    syncfyWidget.on("success", (credential) => {
-      document.getElementById('Codigo').value = '200';
-    });
-
-    syncfyWidget.on("error", (credential, jobError) => {
-      document.getElementById('Codigo').value = '400';
-      document.getElementById('Mensaje').value = 'jobError' + jobError;
-    });
-
-    syncfyWidget.on("socket-error", (socketError) => {
-      document.getElementById('Codigo').value = '400';
-      document.getElementById('Mensaje').value = 'socketError' + socketError;
-    });
-
-    syncfyWidget.on("api-error", (statusCode, apiError) => {
-      document.getElementById('Codigo').value = statusCode;
-      document.getElementById('Mensaje').value = 'apiError' + apiError;
-    });
-
-    syncfyWidget.on("401", () => {
-      document.getElementById('Codigo').value = '401';
-      document.getElementById('Mensaje').value = '401';
-    });
-
-    syncfyWidget.setEntrypointCredential(data.idCredential); //`'${GetURLParameter('IdCredential')}'`);
-
+    enviar();
   </script>
 
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJQHV8" height="0" width="0"

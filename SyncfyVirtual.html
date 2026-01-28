@@ -54,6 +54,7 @@
       }
 
       const data = await res.json();
+      console.log(data);
 
       var params = {
         // Set up the token you created in the Quickstart:
@@ -79,7 +80,7 @@
 
       var syncfyWidget = new SyncfyWidget(params);
 
-      syncfyWidget.on("success", (credential) => {
+      /*syncfyWidget.on("success", (credential) => {
         document.getElementById('Codigo').value = '200';
       });
 
@@ -101,7 +102,7 @@
       syncfyWidget.on("401", () => {
         document.getElementById('Codigo').value = '401';
         document.getElementById('Mensaje').value = '401';
-      });
+      });*/
 
       syncfyWidget.setEntrypointCredential('data.credencial'); //'${GetURLParameter('IdCredential')}'`);
     }

@@ -80,14 +80,13 @@
         body: window.location.search.substring(1)
       });
 
-      const text = await res.text();
-      console.log("Respuesta:", text);
-      alert(text);
+      var data = await res.text().json();
+      console.log("Respuesta:", data);
     }
 
     var params = {
       // Set up the token you created in the Quickstart:
-      token: '',// `'${GetURLParameter('token')}'`,
+      token: data.token,// `'${GetURLParameter('token')}'`,
       element: "#widget",
       config: {
         // Set up the language to use:
@@ -134,7 +133,7 @@
       document.getElementById('Mensaje').value = '401';
     });
 
-    syncfyWidget.setEntrypointCredential(''); //`'${GetURLParameter('IdCredential')}'`);
+    syncfyWidget.setEntrypointCredential(data.idCredential); //`'${GetURLParameter('IdCredential')}'`);
 
   </script>
 

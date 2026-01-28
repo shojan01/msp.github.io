@@ -80,9 +80,14 @@
         body: window.location.search.substring(1)
       });
 
-      const text = await res.text();
-      console.log("Respuesta:", text);
-      return text.json();
+      if (!res.ok) {
+        throw new Error("HTTP " + res.status);
+      }
+
+      const data = await res.json();
+      console.log("Respuesta:", data);
+
+      return data;
     }
 
     var data = enviar();

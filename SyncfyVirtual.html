@@ -85,12 +85,10 @@
       }
 
       const data = await res.json();
-      console.log("Respuesta:", data);
-
       return data;
     }
 
-    var data = enviar();
+    var data = await enviar();
 
     var params = {
       // Set up the token you created in the Quickstart:

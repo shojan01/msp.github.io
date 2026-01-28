@@ -134,7 +134,9 @@
         document.getElementById('Mensaje').value = '401';
       });
 
-      syncfyWidget.setEntrypointCredential(data.idCredential); //'${GetURLParameter('IdCredential')}'`);
+      console.log(data.credencial);
+
+      syncfyWidget.setEntrypointCredential(data.credencial); //'${GetURLParameter('IdCredential')}'`);
     }
 
     enviar();

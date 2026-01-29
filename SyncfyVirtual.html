@@ -119,6 +119,10 @@
         console.log('loaded');
       });
 
+      syncfyWidget.on("dom-updated", () => {
+        console.log('dom-updated');
+      });
+
       /*syncfyWidget.on("success", (credential) => {
         document.getElementById('Codigo').value = '200';
       });

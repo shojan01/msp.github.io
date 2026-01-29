@@ -123,6 +123,14 @@
         console.log('dom-updated');
       });
 
+      syncfyWidget.on("organization-selected", (data) => {
+        console.log('organization-selected', data);
+      });
+
+      syncfyWidget.on("organization-site-selected", (data) => {
+        console.log('organization-site-selected', data);
+      });
+
       /*syncfyWidget.on("success", (credential) => {
         document.getElementById('Codigo').value = '200';
       });

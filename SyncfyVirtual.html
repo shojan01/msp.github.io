@@ -102,6 +102,10 @@
 
       var syncfyWidget = new SyncfyWidget(params);
 
+      syncfyWidget.on("submitted", () => {
+        document.getElementById('widget').style.height = 'auto';
+      });
+
       /*syncfyWidget.on("success", (credential) => {
         document.getElementById('Codigo').value = '200';
       });

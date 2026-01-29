@@ -103,7 +103,16 @@
       var syncfyWidget = new SyncfyWidget(params);
 
       syncfyWidget.on("submitted", () => {
+        console.log('submitted');
         document.getElementById('widget').style.height = 'auto';
+      });
+
+      syncfyWidget.on("updated", (status) => {
+        console.log('status', status);
+      });
+
+      syncfyWidget.on("error", (credential, jobError) => {
+        console.log(jobError);
       });
 
       /*syncfyWidget.on("success", (credential) => {

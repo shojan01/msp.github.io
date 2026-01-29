@@ -115,6 +115,10 @@
         console.log(jobError);
       });
 
+      syncfyWidget.on("loaded", () => {
+        console.log('loaded');
+      });
+
       /*syncfyWidget.on("success", (credential) => {
         document.getElementById('Codigo').value = '200';
       });

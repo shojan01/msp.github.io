@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<script>(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-PJJQHV8');</script>
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].
+      push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-PJJQHV8');
+</script>
+
 <html>
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://syncfy.com/widget/v3/syncfy-authentication-widget.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,107 +70,14 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="https://syncfy.com/widget/v3/syncfy-authentication-widget.js"></script>
+  <iframe id="widget-frame" src="https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development"
+    style="border:none; width:100%; height:150px;">
+  </iframe>
+
   <script>
-
-    async function enviar() {
-      const res = await fetch("https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development", {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: window.location.search.substring(1)
-      });
-
-      if (!res.ok) {
-        throw new Error("HTTP " + res.status);
-      }
-
-      const data = await res.json();
-      console.log(data);
-
-      var params = {
-        // Set up the token you created in the Quickstart:
-        token: data.token,// `'${GetURLParameter('token')}'`,
-        element: "#widget",
-        config: {
-          // Set up the language to use:
-          locale: 'es',
-          entrypoint: {
-            // Set up the country to start:
-            country: 'MX',
-          },
-          navigation: {
-            displayStatusInToast: true,
-            displayCredentialInModal: false,
-            displayErrorsInToast: true,
-            disableFormAutocomplete: true,
-            toastPosition: "bottom-right",
-            socketTimeout: 2400000,
-          },
-        },
-      };
-
-      var syncfyWidget = new SyncfyWidget(params);
-
-      syncfyWidget.on("submitted", () => {
-        console.log('submitted');
-        document.getElementById('widget').style.height = 'auto';
-      });
-
-      syncfyWidget.on("updated", (status) => {
-        console.log('status', status);
-      });
-
-      syncfyWidget.on("error", (credential, jobError) => {
-        console.log(jobError);
-      });
-
-      syncfyWidget.on("loaded", () => {
-        document.getElementById('widget').style.height = 'auto';
-        console.log('loaded');
-      });
-
-      syncfyWidget.on("dom-updated", () => {
-        console.log('dom-updated');
-      });
-
-      syncfyWidget.on("organization-selected", (data) => {
-        console.log('organization-selected', data);
-      });
-
-      syncfyWidget.on("organization-site-selected", (data) => {
-        console.log('organization-site-selected', data);
-      });
-
-      /*syncfyWidget.on("success", (credential) => {
-        document.getElementById('Codigo').value = '200';
-      });
-
-      syncfyWidget.on("error", (credential, jobError) => {
-        document.getElementById('Codigo').value = '400';
-        document.getElementById('Mensaje').value = 'jobError' + jobError;
-      });
-
-      syncfyWidget.on("socket-error", (socketError) => {
-        document.getElementById('Codigo').value = '400';
-        document.getElementById('Mensaje').value = 'socketError' + socketError;
-      });
-
-      syncfyWidget.on("api-error", (statusCode, apiError) => {
-        document.getElementById('Codigo').value = statusCode;
-        document.getElementById('Mensaje').value = 'apiError' + apiError;
-      });
-
-      syncfyWidget.on("401", () => {
-        document.getElementById('Codigo').value = '401';
-        document.getElementById('Mensaje').value = '401';
-      });*/
-
-      syncfyWidget.setEntrypointCredential(data.credencial); //'${GetURLParameter('IdCredential')}'`);
-    }
-
-    enviar();
+    const iframe = document.getElementById('widget-frame');
+    const part = window.location.search.substring(1);
+    iframe.src = `${iframe.src}/${part}`;
   </script>
 
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJQHV8" height="0" width="0"

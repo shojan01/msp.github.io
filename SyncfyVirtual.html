@@ -35,10 +35,14 @@
   <div class="d-flex justify-content-center">
     <div class="d-flex flex-column align-items-center">
 
+      <script>
+        const iframe = document.getElementById('widget-frame');
+        const part = window.location.search.substring(1);
+        iframe.src = `${iframe.src}/${part}`;
+      </script>
+
       <!-- Syncfy -->
-      <div class="widget-wrapper mb-3">
-        <div id="widget"></div>
-      </div>
+      <iframe id="widget-frame" src="https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development"></iframe>
       <!-- Información -->
       <div class="card shadow border-0 rounded-4 p-4" style="top: 65vmin; max-width: 420px; width: 100%;">
         <h4 class="mb-3 text-center">Información</h4>
@@ -47,16 +51,6 @@
       </div>
     </div>
   </div>
-
-  <iframe id="widget-frame" src="https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development"
-    style="border:none;">
-  </iframe>
-
-  <script>
-    const iframe = document.getElementById('widget-frame');
-    const part = window.location.search.substring(1);
-    iframe.src = `${iframe.src}/${part}`;
-  </script>
 
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJJQHV8" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>

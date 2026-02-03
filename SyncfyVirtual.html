@@ -35,14 +35,14 @@
   <div class="d-flex justify-content-center">
     <div class="d-flex flex-column align-items-center">
 
+      <!-- Syncfy -->
+      <iframe id="widget-frame" src="https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development"></iframe>
       <script>
         const iframe = document.getElementById('widget-frame');
         const part = window.location.search.substring(1);
         iframe.src = `${iframe.src}/${part}`;
       </script>
 
-      <!-- Syncfy -->
-      <iframe id="widget-frame" src="https://x801im4eb6.execute-api.us-east-1.amazonaws.com/development"></iframe>
       <!-- Información -->
       <div class="card shadow border-0 rounded-4 p-4" style="top: 65vmin; max-width: 420px; width: 100%;">
         <h4 class="mb-3 text-center">Información</h4>

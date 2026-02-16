@@ -3,18 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Redireccionando...</title>
+</head>
+<body>
+  <iframe id="widget-frame" style="height:60vmin;width:100%;"src="https://tqw38q1hj8.execute-api.us-east-1.amazonaws.com/main/"></iframe>
   <script>
     (function() {
       const params = new URLSearchParams(window.location.search);
       const state = params.get("state"); 
       if (state && state.trim() !== "") {
-        location.replace(`${state+window.location.search}`);
+        if(!state.includes('localhost'))
+        {
+          const iframe = document.getElementById('widget-frame');
+          const part = window.location.search.substring(1);
+          iframe.src = `${iframe.src}/${part}`;
+        }else {
+          location.replace(`${state+window.location.search}`);
+        }
       } else {
         location.replace('https://microsip.com');
       }
     })();
   </script>
-</head>
-<body>
 </body>
 </html>

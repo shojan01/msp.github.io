@@ -35,5 +35,18 @@
       })();
   </script>
   </div>
+  <div>
+    <h2>Serás redirigido a Microsip.com en <span id="counter">5</span> segundos...</h2>
+    <script>
+      let segs = 5;
+      const cont = document.getElementById("counter");
+      const interval = setInterval(() => {
+        segs--; cont.textContent = segundos;
+        if (segs <= 0) {
+          clearInterval(interval);
+          window.location.href = "https://microsip.com";
+        }}, 1000);
+    </script>
+  </div>
 </body>
 </html>

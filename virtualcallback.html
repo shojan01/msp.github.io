@@ -34,19 +34,19 @@
         }
       })();
   </script>
-  </div>
   <div>
-    <h2>Serás redirigido a Microsip.com en <span id="counter">5</span> segundos...</h2>
+    <h5 style="font-size:100%" >Serás redirigido a Microsip.com en <span id="counter">5</span> segundos...</h5>
     <script>
       let segs = 5;
       const cont = document.getElementById("counter");
       const interval = setInterval(() => {
-        segs--; cont.textContent = segundos;
-        if (segs <= 0) {
+        segs--; cont.textContent = segs;
+        if (segs <= 1) {
           clearInterval(interval);
           window.location.href = "https://microsip.com";
         }}, 1000);
     </script>
+  </div>
   </div>
 </body>
 </html>

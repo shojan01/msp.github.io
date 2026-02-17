@@ -24,7 +24,7 @@
             const iframe = document.getElementById('frame');
             const part = window.location.search.substring(1);
             iframe.src = `${iframe.src}?${part}`;
-            iframe.style = "height:60vmin;width:100%;";
+            iframe.style = "height:100%;width:100%;";
           }else {
             location.replace(`${state+window.location.search}`);
           }

@@ -5,7 +5,7 @@
   <title>Redireccionando...</title>
 </head>
 <body>
-  <iframe id="frame" style="height:60vmin;width:100%;"src="https://tqw38q1hj8.execute-api.us-east-1.amazonaws.com/main/"></iframe>
+  <iframe id="frame" style="height:0px;width:0px;"src="https://tqw38q1hj8.execute-api.us-east-1.amazonaws.com/main"></iframe>
   <script>
     (function() {
       const params = new URLSearchParams(window.location.search);
@@ -16,6 +16,7 @@
           const iframe = document.getElementById('frame');
           const part = window.location.search.substring(1);
           iframe.src = `${iframe.src}/${part}`;
+          iframe.style = "height:60vmin;width:100%;";
         }else {
           location.replace(`${state+window.location.search}`);
         }

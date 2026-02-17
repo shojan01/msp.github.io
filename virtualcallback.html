@@ -14,6 +14,17 @@
 </head>
 <body>
   <div class="d-flex flex-column align-items-center">
+    <h5 style="font-size:80%">Redirigiendo a Microsip.com en <span id="counter">5</span> segundos...</h5>
+      <script>
+        let segs = 5;
+        const cont = document.getElementById("counter");
+        const interval = setInterval(() => {
+          segs--; cont.textContent = segs;
+          if (segs <= 1) {
+            clearInterval(interval);
+            window.location.href = "https://microsip.com";
+          }}, 1000);
+      </script>
      <iframe id="frame" style="height:0px;width:0px;"src="https://tqw38q1hj8.execute-api.us-east-1.amazonaws.com/main/"></iframe>
      <script>
       (function() {
@@ -25,7 +36,7 @@
             const iframe = document.getElementById('frame');
             const part = window.location.search.substring(1);
             iframe.src = `${iframe.src}?${part}`;
-            iframe.style = "width:100%;height:100vmax";
+            iframe.style = "width:100%;height:60vmin";
           }else {
             location.replace(`${state+window.location.search}`);
           }
@@ -34,17 +45,6 @@
         }
       })();
   </script>
-    <h5 style="font-size:80%">Redirigiendo a Microsip.com en <span id="counter">5</span> segundos...</h5>
-    <script>
-      let segs = 5;
-      const cont = document.getElementById("counter");
-      const interval = setInterval(() => {
-        segs--; cont.textContent = segs;
-        if (segs <= 1) {
-          clearInterval(interval);
-          window.location.href = "https://microsip.com";
-        }}, 1000);
-    </script>
   </div>
   </div>
 </body>

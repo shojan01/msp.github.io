@@ -20,9 +20,9 @@
         const cont = document.getElementById("counter");
         const interval = setInterval(() => {
           segs--; cont.textContent = segs;
-          if (segs <= 1) {
+          if (segs < 1) {
             clearInterval(interval);
-            window.location.href = "https://microsip.com";
+            window.location.href = "https://www.microsip.com";
           }}, 1000);
       </script>
      <iframe id="frame" style="height:0px;width:0px;"src="https://g9b4xu9gl3.execute-api.us-east-2.amazonaws.com/microsip"></iframe>

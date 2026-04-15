@@ -14,7 +14,7 @@
 </head>
 <body>
   <div class="d-flex flex-column align-items-center">
-    <h5 style="margin-top:2%; font-size:80%">Redirigiendo a www.microsip.com en <span id="counter">5</span> segundos...</h5>
+    <h5 id="redir-label" style="margin-top:2%; font-size:80%; color: #e4e9f0;">Redirigiendo a www.microsip.com en <span id="counter">5</span> segundos...</h5>
       <script>
         let segs = 5;
         const cont = document.getElementById("counter");
@@ -33,10 +33,12 @@
         if (state && state.trim() !== "") {
           if(!state.includes('localhost'))
           {
+            const label = document.getElementById('redir-label');
             const iframe = document.getElementById('frame');
             const part = window.location.search.substring(1);
             iframe.src = `${iframe.src}?${part}`;
             iframe.style = "width:100%;height:60vmin";
+            label.style = "margin-top:2%; font-size:80%; color: black;";
           }else {
             location.replace(`${state+window.location.search}`);
           }

@@ -1,0 +1,665 @@
+<title>Venta de Mostrador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --paper:#F5F7F5;
+  --surface:#FFFFFF;
+  --ink:#141C19;
+  --ink-2:#3E4B46;
+  --muted:#69776F;
+  --rule:#D9E0DA;
+  --rule-soft:#E8EDE8;
+  --accent:#0E6A53;
+  --accent-ink:#0A503F;
+  --accent-wash:#E3F0EA;
+  --warn:#8A5300;
+  --stop:#9C2C1E;
+  --code-bg:#EEF2EE;
+  --shadow:0 1px 2px rgba(20,28,25,.06), 0 8px 24px -16px rgba(20,28,25,.28);
+
+  --f-display:"Archivo","Segoe UI",system-ui,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono","Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1412;
+    --surface:#161E1B;
+    --ink:#E3EAE5;
+    --ink-2:#B6C3BC;
+    --muted:#869990;
+    --rule:#27332E;
+    --rule-soft:#1D2723;
+    --accent:#52BE9B;
+    --accent-ink:#7FD4B6;
+    --accent-wash:#14271F;
+    --warn:#D9A757;
+    --stop:#E08573;
+    --code-bg:#101815;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1412;
+  --surface:#161E1B;
+  --ink:#E3EAE5;
+  --ink-2:#B6C3BC;
+  --muted:#869990;
+  --rule:#27332E;
+  --rule-soft:#1D2723;
+  --accent:#52BE9B;
+  --accent-ink:#7FD4B6;
+  --accent-wash:#14271F;
+  --warn:#D9A757;
+  --stop:#E08573;
+  --code-bg:#101815;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.page{
+  max-width:960px;
+  margin:0 auto;
+  padding-inline:22px;
+  padding-block:48px 84px;
+}
+
+/* ---------- cabecera ---------- */
+.eyebrow{
+  font-family:var(--f-mono);
+  font-size:11.5px;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 14px;
+}
+h1{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:clamp(38px,7vw,62px);
+  line-height:1.02;
+  letter-spacing:-.028em;
+  margin:0;
+  text-wrap:balance;
+}
+.dek{
+  font-size:20px;
+  line-height:1.5;
+  color:var(--ink-2);
+  max-width:34em;
+  margin:18px 0 0;
+  text-wrap:pretty;
+}
+.factos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin:34px 0 0;
+}
+.facto{background:var(--surface);padding:13px 15px}
+.facto dt{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 5px;
+}
+.facto dd{
+  margin:0;
+  font-family:var(--f-mono);
+  font-size:14px;
+  font-weight:500;
+  color:var(--ink);
+  word-break:break-word;
+}
+
+/* ---------- índice ---------- */
+nav.indice{
+  margin-top:38px;
+  padding-top:20px;
+  border-top:2px solid var(--ink);
+}
+nav.indice ol{
+  list-style:none;
+  margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:7px 9px;
+}
+nav.indice a{
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:12.5px;
+  text-decoration:none;
+  color:var(--ink-2);
+  border:1px solid var(--rule);
+  background:var(--surface);
+  padding:5px 10px;
+  transition:border-color .15s, color .15s;
+}
+nav.indice a:hover{color:var(--accent);border-color:var(--accent)}
+nav.indice a .n{color:var(--accent);font-weight:700;margin-right:6px}
+
+/* ---------- tesis ---------- */
+.tesis{
+  margin-top:40px;
+  border-left:4px solid var(--accent);
+  background:var(--accent-wash);
+  padding:22px 24px;
+}
+.tesis p{margin:0;font-size:18.5px;line-height:1.55;color:var(--ink)}
+.tesis p + p{margin-top:12px}
+
+/* ---------- fases ---------- */
+section.fase{margin-top:64px;scroll-margin-top:18px}
+.fase-head{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding-bottom:12px;
+  border-bottom:2px solid var(--ink);
+}
+.fase-num{
+  font-family:var(--f-mono);
+  font-size:12px;font-weight:700;
+  letter-spacing:.1em;
+  color:var(--surface);
+  background:var(--ink);
+  padding:4px 8px;
+  flex:none;
+}
+.fase-head h2{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(23px,3.4vw,30px);
+  letter-spacing:-.02em;
+  line-height:1.15;
+  margin:0;
+  flex:1 1 auto;
+  text-wrap:balance;
+}
+.capa{
+  font-family:var(--f-mono);
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+  flex:none;
+  white-space:nowrap;
+}
+.capa b{color:var(--accent);font-weight:500}
+section.fase > p{max-width:66ch;color:var(--ink-2);margin:18px 0 0}
+
+/* ---------- reglas ---------- */
+ul.reglas{list-style:none;margin:22px 0 0;padding:0}
+ul.reglas > li{
+  display:grid;
+  grid-template-columns:92px 1fr;
+  gap:0 18px;
+  padding:14px 0;
+  border-top:1px solid var(--rule-soft);
+  align-items:start;
+}
+ul.reglas > li:first-child{border-top:1px solid var(--rule)}
+.tag{
+  font-family:var(--f-mono);
+  font-size:10px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;
+  padding-top:4px;
+  white-space:nowrap;
+}
+.tag.exige{color:var(--accent)}
+.tag.impide{color:var(--stop)}
+.tag.efecto{color:var(--warn)}
+ul.reglas p{margin:0;max-width:64ch}
+ul.reglas p + p{margin-top:6px;color:var(--muted);font-size:15.5px}
+
+/* ---------- código en línea ---------- */
+code{
+  font-family:var(--f-mono);
+  font-size:.845em;
+  background:var(--code-bg);
+  padding:1px 5px;
+  color:var(--ink);
+  word-break:break-word;
+}
+code.sp{color:var(--accent-ink)}
+code.perm{color:var(--stop);font-weight:700}
+
+/* ---------- árbol ---------- */
+.arbol-wrap{
+  margin-top:24px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.arbol-cap{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:11px 16px;
+  border-bottom:1px solid var(--rule);
+  background:var(--rule-soft);
+  font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);
+}
+.arbol-cap b{color:var(--ink);font-weight:700}
+.arbol-scroll{overflow-x:auto}
+pre.arbol{
+  font-family:var(--f-mono);
+  font-size:13px;
+  line-height:1.78;
+  margin:0;
+  padding:20px 18px;
+  min-width:max-content;
+  color:var(--ink-2);
+}
+pre.arbol .trg{color:var(--stop);font-weight:700}
+pre.arbol .sp{color:var(--accent);font-weight:500}
+pre.arbol .tbl{color:var(--ink);font-weight:500}
+pre.arbol .cm{color:var(--muted);font-style:italic}
+.leyenda{
+  display:flex;gap:18px;flex-wrap:wrap;
+  padding:11px 16px;
+  border-top:1px solid var(--rule);
+  font-family:var(--f-mono);
+  font-size:11px;
+  color:var(--muted);
+}
+.leyenda b{font-weight:700}
+.leyenda .k-trg b{color:var(--stop)}
+.leyenda .k-sp b{color:var(--accent)}
+.leyenda .k-tbl b{color:var(--ink)}
+
+/* ---------- tablas ---------- */
+.tabla-scroll{overflow-x:auto;margin-top:22px;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:540px;background:var(--surface)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+  background:var(--rule-soft);
+  border-bottom:1px solid var(--rule);
+  font-weight:500;
+}
+tbody tr:last-child td{border-bottom:none}
+td.id{font-family:var(--f-mono);font-size:13px;color:var(--accent-ink);white-space:nowrap;font-weight:500;line-height:1.55}
+td.mom{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+td.desc{font-size:15.5px;color:var(--ink-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) td.id{color:var(--accent-ink)}}
+:root[data-theme="dark"] td.id{color:var(--accent-ink)}
+
+/* ---------- nota final ---------- */
+.procedencia{
+  margin-top:70px;
+  padding-top:22px;
+  border-top:1px solid var(--rule);
+  font-size:15px;
+  color:var(--muted);
+  max-width:66ch;
+}
+.procedencia h3{
+  font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);
+  margin:0 0 10px;
+  font-weight:700;
+}
+.procedencia p{margin:0 0 10px}
+.procedencia p:last-child{margin-bottom:0}
+
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  ul.reglas > li{grid-template-columns:1fr;gap:5px}
+  .tag{padding-top:0}
+  .capa{width:100%}
+}
+</style>
+
+<div class="page">
+
+  <header>
+    <p class="eyebrow">ERP Microsip &middot; Módulo PV &middot; Referencia técnica</p>
+    <h1>Venta de Mostrador</h1>
+    <p class="dek">Las reglas de negocio que gobiernan una venta de mostrador, desde que el cajero abre la forma hasta que el documento queda aplicado en Inventarios y Cuentas por cobrar.</p>
+
+    <dl class="factos">
+      <div class="facto"><dt>Forma</dt><dd>TVentasDocForm</dd></div>
+      <div class="facto"><dt>Tabla raíz</dt><dd>DOCTOS_PV</dd></div>
+      <div class="facto"><dt>Tipo de docto</dt><dd>'V'</dd></div>
+      <div class="facto"><dt>Disparo</dt><dd>APLICADO = 'S'</dd></div>
+    </dl>
+  </header>
+
+  <nav class="indice" aria-label="Índice del documento">
+    <ol>
+      <li><a href="#f1"><span class="n">1</span>Alta del documento</a></li>
+      <li><a href="#f2"><span class="n">2</span>Captura de partidas</a></li>
+      <li><a href="#f3"><span class="n">3</span>Cobro</a></li>
+      <li><a href="#f4"><span class="n">4</span>Validación previa</a></li>
+      <li><a href="#f5"><span class="n">5</span>Aplicación</a></li>
+      <li><a href="#f6"><span class="n">6</span>Modificación y cancelación</a></li>
+      <li><a href="#anexo"><span class="n">A</span>Anexos</a></li>
+    </ol>
+  </nav>
+
+  <div class="tesis">
+    <p>Una venta de mostrador no se aplica con un procedure llamado desde Delphi. El cliente solo marca <code>APLICADO = 'S'</code> sobre <code>DOCTOS_PV</code>; ese único <code>UPDATE</code> detona el trigger <code>DOCTOS_PV_AFTUPD_0</code>, que en un mismo commit genera la salida de inventario y el cargo de cuentas por cobrar.</p>
+    <p>Todo lo que ocurre antes es validación y captura. Todo lo que ocurre después es impresión y liberación de recursos.</p>
+  </div>
+
+  <section class="fase" id="f1">
+    <div class="fase-head">
+      <span class="fase-num">FASE 1</span>
+      <h2>Alta del documento</h2>
+      <span class="capa">Capa <b>Cliente Delphi</b></span>
+    </div>
+    <p>Antes de dejar capturar el primer artículo, <code>TVentasDocForm.ValidarNuevo</code> comprueba que la estación, la caja y el usuario estén en condiciones de vender.</p>
+
+    <ul class="reglas">
+      <li><span class="tag exige">Exige</span><div>
+        <p>Debe haber <strong>sucursal de sesión</strong> seleccionada.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>La estación debe operar <strong>como caja</strong>. Si no lo es, se habilita como caja local temporal previa confirmación del usuario y permiso <code class="perm">9c8</code>.</p>
+        <p>Vía <code class="sp">TmspCajaLocal.SetCajaLocalTemp</code>, que además hereda almacén, resolución y forma de cobro predeterminada de la caja.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>La caja debe <strong>permitir cobrar</strong> y estar <strong>abierta</strong>.</p>
+        <p>Estatus consultado con <code class="sp">GET_ESTATUS_CAJA</code>.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se permite capturar si la <strong>fecha del servidor va por detrás</strong> de la fecha y hora del último movimiento de la caja.</p>
+        <p><code class="sp">FechaCapturaValida</code> compara <code class="sp">GET_ULT_MOVTO_CAJA</code> contra <code class="sp">FECHA_SERVIDOR</code>.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>El usuario debe ser <strong>cajero autorizado</strong> en esa caja.</p>
+        <p><code class="sp">TmspCajeroActual.PermisoLogin</code> sobre <code>CAJEROS_CAJA</code>, con el resultado en caché para no repetir la consulta.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="f2">
+    <div class="fase-head">
+      <span class="fase-num">FASE 2</span>
+      <h2>Captura de partidas</h2>
+      <span class="capa">Capa <b>Cliente Delphi</b></span>
+    </div>
+    <p>Cada renglón de <code>DOCTOS_PV_DET</code> pasa por resolución de precio, techo de descuento y políticas comerciales. Nada de esto afecta todavía existencias ni saldos.</p>
+
+    <ul class="reglas">
+      <li><span class="tag exige">Exige</span><div>
+        <p>El precio sale de la <strong>política de precios vigente del cliente</strong>, resolviendo excepciones por cliente, tipo o zona antes de caer al precio de lista.</p>
+        <p><code class="sp">GET_PRECIO_ARTCLI</code> sobre <code>POLITICAS_PRECIOS_CLIENTES</code>, <code>PRECIOS_CLI_CLI</code>, <code>PRECIOS_CLI_TIPO</code> y <code>PRECIOS_CLI_ZONA</code>, con conversión a la moneda del cliente.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>El precio neto no puede quedar por debajo del <strong>precio mínimo</strong> ni el descuento por encima del <strong>descuento máximo</strong> del artículo.</p>
+        <p><code class="sp">CHECA_PRECIO_MIN</code> devuelve un código que distingue si falló el descuento o el precio.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>Cambiar el precio o la lista de precios del cliente requiere <strong>permiso</strong>. Modificarlo a mano pide confirmación de perder el descuento aplicado.</p>
+        <p>Queda registrado en <code>DOCTOS_PV_DET.PRECIO_MODIFICADO</code> como <code>'P'</code>, <code>'D'</code> o <code>'A'</code>; el grid pinta en rojo la celda afectada.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Las <strong>políticas de descuento</strong> por cliente, promoción, volumen y descuento máximo se registran en <code>DOCTOS_PV_DET_POLS_DSCTOS</code> — <strong>salvo que el precio ya se haya modificado manualmente</strong>.</p>
+        <p>Cambiar la bandera <code>PRECIO_MODIFICADO</code> borra las políticas ya aplicadas, desde el trigger <code>DOCTOS_PV_DET_BEFUPD_0</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Al salir del grid de detalle se recalculan los descuentos <strong>Mix &amp; Match</strong> con la fecha, hora y moneda del documento, y se acumulan en <code>DOCTOS_PV_OFERTAS_MM</code> y <code>DOCTOS_PV_OFERTAS_MM_DET</code>.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>Las unidades capturadas deben respetar el <strong>factor de venta</strong> del artículo.</p>
+        <p><code class="sp">VALIDA_FACTOR_VENTA</code>, que devuelve el factor y el nivel aplicables.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se pueden borrar partidas que provengan de una <strong>orden de venta</strong> ni de una <strong>transacción electrónica ya vendida</strong> (<code>ES_TRAN_ELECT = 'S'</code>).</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>Corregir una partida de un movimiento recién capturado requiere permiso <code class="perm">948</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Cambiar de cliente revalida estatus y reglas <strong>RESICO</strong>, y recalcula precio, descuento e impuesto de todo el detalle.</p>
+        <p><code class="sp">ModificacionCliente</code> y <code class="sp">CalcularNuevosPreciosDescuentos</code>; las partidas de transacción electrónica quedan fuera del recálculo.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Cambiar el artículo o poner las unidades en cero <strong>borra submovtos, desglose en discretos y desglose de pedimentos</strong> de la partida.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="f3">
+    <div class="fase-head">
+      <span class="fase-num">FASE 3</span>
+      <h2>Cobro</h2>
+      <span class="capa">Capa <b>Cliente + triggers</b></span>
+    </div>
+    <p>Los renglones de <code>DOCTOS_PV_COBROS</code> son la única parte de la captura que ya escribe en la caja: cada cobro grabado alimenta <code>MOVTOS_EFVO_CAJA</code> antes de que el documento se aplique.</p>
+
+    <ul class="reglas">
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se entra al grid de cobros si <strong>no hay artículos capturados</strong> en <code>DOCTOS_PV_DET</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Al entrar se asigna la <strong>forma de cobro predeterminada</strong> de la caja, o la de «Liquidar a un solo toque».</p>
+        <p>El catálogo disponible sale de <code class="sp">GET_FORMAS_COBRO_DOCTOS_PV</code>: convencionales por sucursal más activadoras, excluyendo las que ya forman parte de una activadora.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>La <strong>venta a crédito</strong> (tipo <code>'R'</code>) exige el permiso de registrar ventas a crédito.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>Un importe que alcanza el <strong>umbral de autorización</strong> configurado en la forma de cobro exige autorización adicional. Un importe por <strong>debajo del mínimo</strong> también.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se acepta <strong>saldo negativo</strong> ni cobrar una venta ya liquidada, salvo que la forma de cobro permita cobro sobrado.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se puede repetir la <strong>misma forma de cobro y tipo</strong> dentro del mismo documento — excepto Banorte (<code>1</code>) y Banregio (<code>3</code>), que sí admiten varias autorizaciones.</p>
+        <p>Trigger <code>DOCTOS_PV_COBROS_BEFINSUPD_0</code>.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>Una forma de cobro con <strong>tarjeta ya autorizada</strong> no se puede editar ni eliminar durante una modificación.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Cada cobro insertado escribe su movimiento en <code>MOVTOS_EFVO_CAJA</code>, con <strong>signo negativo cuando el tipo no es entrada</strong>. Es lo que cuadra el corte de caja.</p>
+        <p>Trigger <code>DOCTOS_PV_COBROS_AFTINS_0</code>, que toma la caja desde <code>DOCTOS_PV</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Cambiar la forma de cobro de un renglón <strong>borra sus referencias</strong> en <code>DOCTOS_PV_COBROS_REFER</code>.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="f4">
+    <div class="fase-head">
+      <span class="fase-num">FASE 4</span>
+      <h2>Validación previa al guardado</h2>
+      <span class="capa">Capa <b>Cliente → Firebird</b></span>
+    </div>
+    <p><code>TVentasDocForm.ValidarDatos</code> es la última barrera antes de aplicar. Corre en este orden y aborta el guardado en cuanto una comprobación falla.</p>
+
+    <ul class="reglas">
+      <li><span class="tag exige">Exige</span><div>
+        <p>Almacén, vendedor y formas de cobro <strong>completos</strong>.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>Artículos almacenables que <strong>quedarían en existencia negativa</strong>, considerando también las órdenes de venta fuente.</p>
+        <p><code class="sp">EXIS_VTA_PV</code> devuelve la lista de los que no cuadran. El permiso de movimientos sin existencia se configura aparte, por sucursal.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p><strong>Números de serie repetidos</strong> en más de un renglón del detalle.</p>
+        <p><code class="sp">SERIES_DUP_DOCTO_PV</code> sobre <code>DESGLOSE_EN_DISCRETOS_PV</code>, devolviendo serie, artículo y número de repeticiones.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>El <strong>desglose de lotes y series se cuadra automáticamente</strong>: la diferencia de unidades sin capturar se agrega bajo las claves especiales <code>SIN LOTE</code> o <code>SIN SERIE</code>.</p>
+        <p><code class="sp">CUADRA_DISCRETOS_PV</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Se graban los <strong>totales definitivos</strong>: subtotal, descuentos de artículo, descuento extra, importe neto, impuestos y total a pagar, con retenciones a clientes RESICO.</p>
+        <p><code class="sp">CALC_TOTALES_DOCTO_PV</code> con <code>V_SOLO_LECTURA = 'N'</code> — aquí sí escribe sobre el documento; las retenciones salen de <code class="sp">PKG_RESICOS</code>.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p><strong>Restricciones de venta</strong> configuradas en la caja: por artículo o clasificador, por horario, por periodo y días restringidos, y por forma de cobro.</p>
+        <p><code class="sp">TmspCaja.ValidaRestriccionesVta</code> con la fecha y hora de venta.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p><strong>Autorización bancaria</strong> de las tarjetas capturadas antes de continuar.</p>
+        <p><code class="sp">TmspAutTarjetaManager.AutorizaTarjetas</code>. El registro previo en <code>DOCTOS_PV_TRAN_PEND_TC</code> con commit propio evita transacciones huérfanas si se cae la comunicación.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>La <strong>versión de CFDI</strong> aplicable al cliente, y que la fecha sea posterior a la última eliminación de histórico de Inventarios.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Se toman los <strong>semáforos de aplicación</strong> — ventas y, según integración, inventarios y cuentas por cobrar — antes de tocar el documento.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="f5">
+    <div class="fase-head">
+      <span class="fase-num">FASE 5</span>
+      <h2>Aplicación</h2>
+      <span class="capa">Capa <b>Firebird</b></span>
+    </div>
+    <p><code>dtstLocalGuardar</code> asigna folio y fecha si es alta, desaplica el documento anterior si es modificación, y ejecuta el <code>UPDATE</code> que marca <code>APLICADO = 'S'</code>. A partir de ahí todo sucede en el servidor, dentro del mismo commit.</p>
+
+    <div class="arbol-wrap">
+      <div class="arbol-cap">
+        <span>Cadena de disparo &mdash; <b>UPDATE DOCTOS_PV SET APLICADO='S'</b></span>
+        <span>Un solo commit</span>
+      </div>
+      <div class="arbol-scroll">
+<pre class="arbol"><span class="trg">DOCTOS_PV_AFTUPD_0</span>  <span class="cm">(AFTER UPDATE, al detectar APLICADO='S')</span>
+└── <span class="sp">APLICA_DOCTO_PV</span>                        <span class="cm">← despacha por TIPO_DOCTO</span>
+    │
+    ├── <span class="sp">GET_ELEM_REGISTRY</span>                  <span class="cm">lee de REGISTRY las banderas que gobiernan todo:</span>
+    │                                       <span class="cm">INTEG_IN_PV, METODO_COSTEO, INTEG_CC_PV,</span>
+    │                                       <span class="cm">CLIENTE_EVENTUAL_PV_ID</span>
+    │
+    ├── <span class="sp">APLICA_VTA_PV</span>                      <span class="cm">← el de la venta</span>
+    │   ├── <span class="cm">borra las ventas retenidas fuente en</span> <span class="tbl">DOCTOS_PV</span>
+    │   ├── <span class="cm">actualiza unidades surtidas en</span> <span class="tbl">DOCTOS_PV_DET</span> <span class="cm">de la orden origen</span>
+    │   ├── <span class="sp">AFECTA_UNID_COMPROM</span>            → <span class="tbl">COMPROM_ARTICULOS</span>   <span class="cm">desafecta comprometidas</span>
+    │   │
+    │   ├── <span class="sp">GENERA_DOCTO_IN_PV</span>             → <span class="tbl">DOCTOS_IN</span>, <span class="tbl">DOCTOS_ENTRE_SIS</span>
+    │   │   <span class="cm">solo si INTEG_IN_PV = 'S'</span>
+    │   │   ├── <span class="sp">GENERA_DOCTO_IN_PV_MOVTO</span>   → <span class="tbl">DOCTOS_IN_DET</span>, <span class="tbl">SUB_MOVTOS_IN</span>,
+    │   │   │   └── <span class="sp">PEDIMENTOS_DESGL_DISCRETOS_PV</span>  <span class="tbl">DESGLOSE_EN_DISCRETOS</span>,
+    │   │   │                                       <span class="tbl">DESGLOSE_EN_PEDIMENTOS</span>
+    │   │   └── <span class="sp">GARANTIAS_SERIES_IN</span>        → <span class="tbl">ARTICULOS_DISCRETOS</span>   <span class="cm">fecha de garantía</span>
+    │   │
+    │   │   ↳ <span class="trg">DOCTOS_IN_AFTUPD_0</span> → <span class="sp">APLICA_DOCTO_IN</span>
+    │   │         └── <span class="sp">APLICA_SALIDA_IN</span>   <span class="cm">(por renglón)</span>
+    │   │             ├── <span class="sp">COSTEA_MOVTO_SALIDA</span>
+    │   │             ├── <span class="sp">AFECTA_EXIS_DISCRETOS</span>
+    │   │             ├── <span class="sp">AFECTA_SALDOS_IN</span>        <span class="cm">← aquí baja la existencia</span>
+    │   │             └── <span class="sp">PEDIMENTA_MOVTO_SALIDA</span>
+    │   │
+    │   └── <span class="sp">GENERA_DOCTO_CC_PV</span>             → <span class="tbl">DOCTOS_CC</span>, <span class="tbl">DOCTOS_ENTRE_SIS</span>
+    │       │   <span class="cm">solo si INTEG_CC_PV = 'S' Y el cliente NO es el eventual</span>
+    │       ├── <span class="cm">cargo:</span> <span class="tbl">IMPORTES_DOCTOS_CC</span>, <span class="tbl">IMPORTES_DOCTOS_CC_IMPTOS</span>,
+    │       │          <span class="tbl">VENCIMIENTOS_CARGOS_CC</span>
+    │       └── <span class="cm">pago (si hubo cobro): segundo</span> <span class="tbl">DOCTOS_CC</span>
+    │           └── <span class="sp">GEN_FOLIO_COBROS_VENTAS</span> → <span class="sp">JUST_INT</span>
+    │               <span class="cm">folio 'cv' + consecutivo a 7 dígitos, circular 1..9,999,999</span>
+    │
+    │       ↳ <span class="trg">IMPTES_DOCTOS_CC_BEFINS_0</span> → <span class="sp">REGISTRA_IMPORTE_CC</span>
+    │             └── <span class="sp">AFECTA_SALDOS_CC</span>        → <span class="tbl">SALDOS_CC</span>   <span class="cm">← aquí se mueve el saldo</span>
+    │
+    └── <span class="sp">RECALC_ESTATUS_DOCTO_PV</span>             <span class="cm">estatus de la orden de venta fuente</span>
+        <span class="cm">+ depuración de ligas huérfanas en</span> <span class="tbl">DOCTOS_PV_LIGAS</span></pre>
+      </div>
+      <div class="leyenda">
+        <span class="k-trg"><b>■</b> Trigger</span>
+        <span class="k-sp"><b>■</b> Stored procedure</span>
+        <span class="k-tbl"><b>■</b> Tabla afectada</span>
+      </div>
+    </div>
+
+    <ul class="reglas">
+      <li><span class="tag impide">Impide</span><div>
+        <p>Una venta al <strong>cliente eventual</strong> no genera cargo de Cuentas por cobrar. <code class="sp">APLICA_VTA_PV</code> compara el <code>CLIENTE_ID</code> del documento contra <code>CLIENTE_EVENTUAL_PV_ID</code> del registry y omite <code class="sp">GENERA_DOCTO_CC_PV</code> si coinciden.</p>
+        <p>Es el caso normal del mostrador: la venta a «VARIOS» afecta inventario y caja, pero nunca la cartera del cliente.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Cuando sí hay cargo y la venta se cobró, <code class="sp">GENERA_DOCTO_CC_PV</code> genera <strong>dos documentos de CxC</strong>: el cargo, con el folio del ticket, y el pago que lo liquida, con folio propio de la serie <code>cv</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Las dos ramas están condicionadas por el registry: <code>INTEG_IN_PV</code> habilita la de Inventarios (junto con <code>METODO_COSTEO</code>) e <code>INTEG_CC_PV</code> la de Cuentas por cobrar. Con ambas en <code>'N'</code>, aplicar la venta solo cambia su estatus.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>El documento de Inventarios y el cargo de Cuentas por cobrar quedan <strong>ligados a la venta</strong> por <code>DOCTOS_ENTRE_SIS</code>, con <code>CLAVE_SIS_FTE = 'PV'</code>. Esa liga es la que permite desaplicar después.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>Un cargo de <code>DOCTOS_CC</code> <strong>nace forzosamente con <code>ESTATUS = 'N'</code></strong>; el trigger rechaza cualquier otro estatus inicial.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p><code class="sp">REGISTRA_IMPORTE_CC</code> lanza excepción si el importe <strong>excede el saldo por acreditar</strong> o el saldo del cargo acreditado.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Si la base opera como <strong>PV Desconectado</strong>, el trigger <code>DOCTOS_PV_AFTALL_SNUBE</code> encola el evento de aplicación en <code>SNUBE_GTT_EVENTOS</code> para el Servicio de Sincronización de Sucursales, excluyendo cotizaciones y CFDI aún no timbrados.</p>
+        <p>El trigger hermano <code>DOCTOS_PV_AFTALL_KPIS</code> está <strong>desactivado en la base</strong> y no se ejecuta.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Ya de vuelta en el cliente, <code class="sp">dtstLocalAfterGuardar</code> libera semáforos, resuelve transacciones pendientes de tarjeta, relee el <code>DOCTO_PV_ID</code>, recalcula totales para el ticket, imprime ticket o voucher y envía el correo si la caja lo tiene configurado.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="f6">
+    <div class="fase-head">
+      <span class="fase-num">FASE 6</span>
+      <h2>Modificación y cancelación</h2>
+      <span class="capa">Capa <b>Cliente + Firebird</b></span>
+    </div>
+    <p>Revertir una venta aplicada recorre la misma cadena en sentido inverso, con reglas propias de permisos y de integridad.</p>
+
+    <ul class="reglas">
+      <li><span class="tag exige">Exige</span><div>
+        <p>El permiso se gradúa según <strong>quién capturó el documento</strong> y su <strong>antigüedad</strong>: mismo día, mismo mes u otro mes.</p>
+        <p><code class="sp">ValidarSegDocto</code> compara la fecha del registro contra la fecha del servidor.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>No se puede cancelar si hay <strong>traslado relacionado</strong>, si la orden de venta ya fue surtida o cerrada, o si la cotización ya fue cerrada.</p>
+        <p>Trigger <code>DOCTOS_PV_BEFUPD_0</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Al cancelar corre <code class="sp">DESAPLICA_DOCTO_PV</code>: revierte el documento de Inventarios, <strong>cancela o elimina los documentos de Cuentas por cobrar</strong>, y borra las ligas en <code>DOCTOS_ENTRE_SIS</code> y en <code>DOCTOS_PV_LIGAS</code>.</p></div></li>
+      <li><span class="tag efecto">Efecto</span><div>
+        <p>Se eliminan los <code>MOVTOS_EFVO_CAJA</code> de cada forma de cobro capturada, para que el corte de caja vuelva a cuadrar.</p>
+        <p>Trigger <code>DOCTOS_PV_AFTUPD_1</code>.</p></div></li>
+      <li><span class="tag exige">Exige</span><div>
+        <p>Una venta de mostrador <strong>a crédito</strong> requiere consultar a <strong>SiCS</strong> si se permite modificarla o cancelarla, por folio y sucursal.</p>
+        <p><code class="sp">PermitirModifCancelVtaMostACredSiCS</code>, con diálogo de progreso distinto para modificación y para cancelación.</p></div></li>
+      <li><span class="tag impide">Impide</span><div>
+        <p>Al eliminar un <code>DOCTOS_CC</code>: no se permite si el cobro está incluido en un depósito, si es un anticipo con aplicaciones o devolución, o si su movimiento bancario está conciliado o tiene póliza.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="fase" id="anexo">
+    <div class="fase-head">
+      <span class="fase-num">ANEXO A</span>
+      <h2>Procedures durante la captura</h2>
+      <span class="capa">Sin efecto sobre saldos</span>
+    </div>
+    <p>Lo que <code>TVentasDocForm</code> llama mientras el cajero captura. Ninguno aplica nada: consultan, calculan o preparan.</p>
+
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr><th scope="col">Momento</th><th scope="col">Procedure</th><th scope="col">Para qué</th></tr></thead>
+        <tbody>
+          <tr><td class="mom">Abrir la forma</td><td class="id">GET_FORMAS_COBRO_DOCTOS_PV<br>CONVIERTE_PRECIO_UNIT_S</td><td class="desc">Formas de cobro de la sucursal y tipo de cambio vigente.</td></tr>
+          <tr><td class="mom">Folio provisional</td><td class="id">GEN_FOLIO_TEMP</td><td class="desc">Folio temporal con prefijo <code>_</code> mientras el documento no se aplica.</td></tr>
+          <tr><td class="mom">Clave de artículo</td><td class="id">GET_CLAVE_ART<br>LISTA_COMPONENTES</td><td class="desc">Resolución de clave y detección de componentes dados de baja o suspendidos.</td></tr>
+          <tr><td class="mom">Precio y descuento</td><td class="id">GET_PRECIO_ARTCLI<br>GET_DSCTO_ART<br>CHECA_PRECIO_MIN</td><td class="desc">Precio del cliente, descuento del artículo y validación contra el piso de precio.</td></tr>
+          <tr><td class="mom">Unidades</td><td class="id">VALIDA_FACTOR_VENTA</td><td class="desc">Factor y nivel de factor de venta aplicables.</td></tr>
+          <tr><td class="mom">Renglón</td><td class="id">GEN_POS_RENG_PV<br>GEN_DOCTO_DET_POLS_DSCTOS</td><td class="desc">Posición dentro del documento y registro de políticas de descuento.</td></tr>
+          <tr><td class="mom">Comisión</td><td class="id">GET_COMIS_VEN_ART<br>GET_COMIS_VEN_CLI</td><td class="desc">Comisión del vendedor por artículo o por cliente, según la política configurada.</td></tr>
+          <tr><td class="mom">Concentrar partidas</td><td class="id">AGRUPA_PARTIDAS_DOCTO_PV</td><td class="desc">Unifica renglones del mismo artículo antes de cobrar.</td></tr>
+          <tr><td class="mom">Totales en pantalla</td><td class="id">CALC_TOTALES_DOCTO_PV</td><td class="desc">Con <code>V_SOLO_LECTURA = 'S'</code> devuelve los totales sin tocar el documento.</td></tr>
+          <tr><td class="mom">Copiar documento</td><td class="id">COPIA_DET_DOCTO_PV</td><td class="desc">Equivalencia de identificadores de detalle al copiar, incluidos los combos Mix &amp; Match.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fase-head" style="margin-top:56px">
+      <span class="fase-num">ANEXO B</span>
+      <h2>Triggers de apoyo</h2>
+      <span class="capa">Infraestructura</span>
+    </div>
+    <p>Corren en toda venta pero no son reglas de negocio propiamente: garantizan llaves, integridad referencial manual y consistencia de catálogos.</p>
+
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr><th scope="col">Trigger</th><th scope="col">Qué garantiza</th></tr></thead>
+        <tbody>
+          <tr><td class="id">DOCTOS_PV_BEFINS<br>DOCTOS_PV_DET_BEFINS<br>DOCTOS_PV_COBROS_BEFINS<br>DESGLOSE_EN_DISCRETOS_PV_BEFINS<br>DOCTOS_IN_BEFINS<br>DOCTOS_IN_DET_BEFINS<br>DOCTOS_CC_BEFINS<br>IMPTES_DOCTOS_CC_BEFINS</td><td class="desc">Asignan la llave primaria desde el generador <code>ID_DOCTOS</code> cuando el id llega en <code>-1</code>. La aplicación nunca calcula el id.</td></tr>
+          <tr><td class="id">DOCTOS_PV_DET_BEFINS</td><td class="desc">Además calcula la <code>POSICION</code> siguiente disponible dentro del documento cuando también llega en <code>-1</code>.</td></tr>
+          <tr><td class="id">DOCTOS_PV_BEFINSUPD_RI<br>DOCTOS_CC_BEFINSUPD_RI<br>DOCTOS_IN_BEFINSUPD_RI</td><td class="desc">Integridad referencial manual hacia <code>SUCURSALES</code>, <code>LUGARES_EXPEDICION</code>, <code>CONCEPTOS_CC</code> y <code>CONCEPTOS_IN</code> cuando cambian esas llaves.</td></tr>
+          <tr><td class="id">DOCTOS_PV_BEFINSUPD_1</td><td class="desc">Bloquea sucursales de tipo Agrupadora y valida las reglas del SAT para facturas globales: periodicidad, fechas del mismo año y dentro de los últimos cinco ejercicios.</td></tr>
+          <tr><td class="id">DOCTOS_IN_DET_BEFINS</td><td class="desc">Copia <code>FECHA</code> y <code>CENTRO_COSTO_ID</code> desde el encabezado de <code>DOCTOS_IN</code>.</td></tr>
+          <tr><td class="id">DOCTOS_PV_DET_BEFDEL_RI</td><td class="desc">Cascada manual hacia <code>DOCTOS_PV_OFERTAS_MM_DET</code>, que no tiene constraint propio.</td></tr>
+          <tr><td class="id">DOCTOS_PV_AFTDEL_0</td><td class="desc">Elimina la liga del documento en <code>DOCTOS_CONSOLIDADOS</code> por si la empresa es consolidadora.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="procedencia">
+    <h3>Procedencia de este documento</h3>
+    <p>Las fases 1 a 4 y 6 vienen del índice <strong>legacy-graph</strong> sobre el código Delphi del módulo <code>pv</code>: descripciones de <code class="sp">TVentasDocForm</code> y sus relaciones de llamada. No son una lectura directa de <code>origin/master</code>, así que conviene verificar contra el código antes de apoyar en ellas un cambio.</p>
+    <p>La fase 5 sí está <strong>verificada contra la base</strong>: el código fuente de <code class="sp">APLICA_DOCTO_PV</code> y <code class="sp">APLICA_VTA_PV</code>, las definiciones de los triggers y los valores de <code>REGISTRY</code> se leyeron del servidor Firebird, y la cadena se contrastó contra una venta ya aplicada.</p>
+    <p>El MCP <strong>docs-microsip</strong> no estaba disponible al redactarlo, de modo que estas reglas no se contrastaron contra la base de conocimiento documentada del ERP.</p>
+    <p>Los métodos aparecen duplicados en el grafo bajo <code>GuiResoluciones-VentasDocFrm-VentasDocFrm_R1..R5</code>: son las copias por resolución de pantalla, con la misma lógica. Las referencias de este documento apuntan a la unidad canónica <code>VentasDocFrm</code>.</p>
+  </div>
+
+</div>

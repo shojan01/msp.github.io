@@ -1,0 +1,726 @@
+<title>Golden Dataset PV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --paper:#F5F7F5;
+  --surface:#FFFFFF;
+  --sunk:#EDF1ED;
+  --ink:#141C19;
+  --ink-2:#3E4B46;
+  --muted:#69776F;
+  --rule:#D9E0DA;
+  --rule-soft:#E8EDE8;
+  --accent:#0E6A53;
+  --accent-ink:#0A503F;
+  --accent-wash:#E3F0EA;
+  --warn:#8A5300;
+  --warn-wash:#F7EFDF;
+  --stop:#9C2C1E;
+  --stop-wash:#F8E8E4;
+  --code-bg:#EEF2EE;
+  --shadow:0 1px 2px rgba(20,28,25,.06), 0 8px 24px -16px rgba(20,28,25,.28);
+
+  --f-display:"Archivo","Segoe UI",system-ui,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono","Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1412;
+    --surface:#161E1B;
+    --sunk:#121A17;
+    --ink:#E3EAE5;
+    --ink-2:#B6C3BC;
+    --muted:#869990;
+    --rule:#27332E;
+    --rule-soft:#1D2723;
+    --accent:#52BE9B;
+    --accent-ink:#7FD4B6;
+    --accent-wash:#14271F;
+    --warn:#D9A757;
+    --warn-wash:#241B10;
+    --stop:#E08573;
+    --stop-wash:#26140F;
+    --code-bg:#101815;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1412;
+  --surface:#161E1B;
+  --sunk:#121A17;
+  --ink:#E3EAE5;
+  --ink-2:#B6C3BC;
+  --muted:#869990;
+  --rule:#27332E;
+  --rule-soft:#1D2723;
+  --accent:#52BE9B;
+  --accent-ink:#7FD4B6;
+  --accent-wash:#14271F;
+  --warn:#D9A757;
+  --warn-wash:#241B10;
+  --stop:#E08573;
+  --stop-wash:#26140F;
+  --code-bg:#101815;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1000px;margin:0 auto;padding-inline:22px;padding-block:48px 84px}
+
+/* cabecera */
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;
+}
+h1{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(36px,6.6vw,58px);line-height:1.03;letter-spacing:-.028em;
+  margin:0;text-wrap:balance;
+}
+.dek{font-size:20px;line-height:1.5;color:var(--ink-2);max-width:36em;margin:18px 0 0;text-wrap:pretty}
+
+.premisa{
+  margin-top:36px;border-left:4px solid var(--accent);background:var(--accent-wash);
+  padding:22px 24px;
+}
+.premisa p{margin:0;font-size:18.5px;line-height:1.55;color:var(--ink)}
+.premisa p + p{margin-top:12px}
+
+/* bandas de nivel */
+section.nivel{margin-top:60px}
+.nivel-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.nivel-num{
+  font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.1em;
+  color:var(--surface);background:var(--ink);padding:4px 8px;flex:none;
+}
+.nivel-head h2{
+  font-family:var(--f-display);font-weight:600;
+  font-size:clamp(22px,3.3vw,29px);letter-spacing:-.02em;line-height:1.15;
+  margin:0;flex:1 1 auto;text-wrap:balance;
+}
+.meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);border-top:none;
+}
+.meta div{background:var(--surface);padding:11px 14px}
+.meta dt{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 4px;
+}
+.meta dd{margin:0;font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--ink);line-height:1.45}
+section.nivel > p{max-width:66ch;color:var(--ink-2);margin:20px 0 0}
+
+/* tablas */
+.tabla-scroll{overflow-x:auto;margin-top:22px;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:640px;background:var(--surface)}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);background:var(--rule-soft);border-bottom:1px solid var(--rule);font-weight:500;
+}
+tbody tr:last-child td{border-bottom:none}
+td.sp{font-family:var(--f-mono);font-size:13px;color:var(--accent-ink);white-space:nowrap;font-weight:500}
+td.num{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.por{font-size:15.5px;color:var(--ink-2)}
+th.r,td.num{text-align:right}
+tr.destaca td{background:var(--accent-wash)}
+tr.destaca td.sp{font-weight:700}
+
+/* listas de SP con delta */
+ul.items{list-style:none;margin:22px 0 0;padding:0}
+ul.items > li{
+  display:grid;grid-template-columns:230px 1fr;gap:0 18px;
+  padding:14px 0;border-top:1px solid var(--rule-soft);align-items:start;
+}
+ul.items > li:first-child{border-top:1px solid var(--rule)}
+.nom{font-family:var(--f-mono);font-size:13.5px;font-weight:700;color:var(--accent-ink);line-height:1.5;word-break:break-word}
+.nom small{display:block;font-weight:400;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+ul.items p{margin:0;max-width:62ch;color:var(--ink-2)}
+
+/* etiqueta de sección no numerada */
+.marca{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  border-bottom:2px solid var(--accent);padding-bottom:4px;margin-bottom:14px;
+}
+section.bloque{margin-top:62px}
+section.bloque h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(22px,3.3vw,29px);
+  letter-spacing:-.02em;line-height:1.15;margin:0;text-wrap:balance;
+}
+section.bloque > p{max-width:66ch;color:var(--ink-2);margin:16px 0 0}
+
+/* ejes */
+.ejes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:24px}
+.eje{border:1px solid var(--rule);background:var(--surface);padding:14px 15px}
+.eje h3{
+  font-family:var(--f-display);font-size:15.5px;font-weight:600;margin:0 0 4px;
+  color:var(--ink);letter-spacing:-.01em;
+}
+.eje .ram{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.eje .ram span{
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-2);
+  background:var(--sunk);border:1px solid var(--rule);padding:2px 7px;
+}
+.eje p{margin:0;font-size:14px;color:var(--muted);line-height:1.45}
+
+/* riesgos e invariantes */
+.par{display:grid;grid-template-columns:1fr;gap:26px;margin-top:24px}
+@media (min-width:820px){.par{grid-template-columns:1fr 1fr;gap:32px}}
+.col h3{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  margin:0 0 12px;font-weight:700;
+}
+.col.riesgo h3{color:var(--stop)}
+.col.inv h3{color:var(--accent)}
+.col ul{list-style:none;margin:0;padding:0}
+.col li{padding:11px 0;border-top:1px solid var(--rule-soft);font-size:15.5px;color:var(--ink-2)}
+.col li:first-child{border-top:1px solid var(--rule)}
+.col.riesgo li{border-left:3px solid var(--stop-wash);padding-left:12px}
+.col.inv li{border-left:3px solid var(--accent-wash);padding-left:12px}
+.col li b{color:var(--ink);font-weight:600}
+.formula{
+  display:block;font-family:var(--f-mono);font-size:12.5px;color:var(--ink);
+  background:var(--code-bg);padding:7px 9px;margin-top:7px;overflow-x:auto;white-space:nowrap;
+}
+
+/* arranque */
+.arranque{
+  margin-top:62px;border:1px solid var(--rule);background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.arranque-cap{
+  padding:11px 18px;border-bottom:1px solid var(--rule);background:var(--rule-soft);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+}
+.arranque-cap b{color:var(--ink);font-weight:700}
+.arranque-cuerpo{padding:22px 24px}
+.arranque-cuerpo p{margin:0;max-width:64ch;color:var(--ink-2)}
+.arranque-cuerpo p + p{margin-top:13px}
+.arranque-cuerpo strong{color:var(--ink)}
+
+/* caso trabajado */
+.caso-meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:24px;
+}
+.caso-meta > div{background:var(--surface);padding:12px 14px}
+.caso-meta dt{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 4px;
+}
+.caso-meta dd{margin:0;font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--ink);line-height:1.45}
+.caso-meta dd em{font-style:normal;display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:3px;line-height:1.4}
+
+.subt{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin:34px 0 0;
+}
+
+.salidas{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:15px;margin-top:16px}
+.sal{border:1px solid var(--rule);background:var(--surface)}
+.sal h3{
+  margin:0;font-family:var(--f-mono);font-size:11.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--accent-ink);background:var(--rule-soft);border-bottom:1px solid var(--rule);
+  padding:9px 13px;display:flex;justify-content:space-between;gap:10px;align-items:baseline;
+}
+.sal h3 em{font-style:normal;color:var(--muted);font-weight:400;letter-spacing:.1em;font-size:9.5px;text-transform:uppercase;white-space:nowrap}
+.sal dl{margin:0;padding:5px 13px 10px}
+.sal .row{
+  display:flex;justify-content:space-between;gap:14px;padding:5px 0;
+  border-bottom:1px solid var(--rule-soft);font-family:var(--f-mono);font-size:12.5px;
+}
+.sal .row:last-child{border-bottom:none}
+.sal .row dt{color:var(--muted);margin:0}
+.sal .row dd{margin:0;color:var(--ink);font-weight:500;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sal .row dd.res{color:var(--accent);font-weight:700}
+.sal .row dd.var{color:var(--muted);font-weight:400;font-style:italic}
+
+.verif{
+  margin-top:22px;border:1px solid var(--accent);background:var(--accent-wash);
+  padding:18px 20px;
+}
+.verif b{
+  display:block;font-family:var(--f-mono);font-size:11px;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:8px;
+}
+:root[data-theme="dark"] .verif b{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .verif b{color:var(--accent)}}
+.verif p{margin:0;color:var(--ink);max-width:64ch}
+.verif p + p{margin-top:9px}
+
+.avisos{margin-top:32px;display:grid;gap:12px}
+.aviso{border-left:3px solid var(--warn);background:var(--warn-wash);padding:14px 16px}
+.aviso b{display:block;font-family:var(--f-display);font-size:15.5px;color:var(--ink);margin-bottom:4px}
+.aviso p{margin:0;font-size:15.5px;color:var(--ink-2);max-width:64ch}
+
+code{
+  font-family:var(--f-mono);font-size:.845em;background:var(--code-bg);
+  padding:1px 5px;color:var(--ink);word-break:break-word;
+}
+code.k{color:var(--accent-ink)}
+
+.nota{
+  margin-top:64px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:15px;color:var(--muted);max-width:66ch;
+}
+.nota h3{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);margin:0 0 10px;font-weight:700;
+}
+.nota p{margin:0 0 10px}
+.nota p:last-child{margin-bottom:0}
+
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:560px){
+  body{font-size:16px}
+  ul.items > li{grid-template-columns:1fr;gap:6px}
+}
+</style>
+
+<div class="page">
+
+  <header>
+    <p class="eyebrow">ERP Microsip &middot; Módulo PV &middot; Plan de pruebas</p>
+    <h1>Golden Dataset PV</h1>
+    <p class="dek">Qué stored procedures de la venta de mostrador se pueden evaluar por comportamiento, con qué oráculo cada uno, qué hay que fijar para que sean reproducibles, y un primer caso con sus valores esperados.</p>
+  </header>
+
+  <div class="premisa">
+    <p>La clasificación que importa no es «qué procedure tocamos» sino <strong>qué tipo de oráculo admite cada uno</strong>. Un procedure sin efectos secundarios se compara contra una tupla; uno que muta el estado solo se puede comparar contra un delta.</p>
+    <p>De ahí salen tres niveles, con costo de arnés y rendimiento muy distintos.</p>
+  </div>
+
+  <section class="nivel">
+    <div class="nivel-head">
+      <span class="nivel-num">NIVEL 1</span>
+      <h2>Sin efectos secundarios</h2>
+    </div>
+    <dl class="meta">
+      <div><dt>Oráculo</dt><dd>Tupla de salida</dd></div>
+      <div><dt>Costo del arnés</dt><dd>Bajo</dd></div>
+      <div><dt>Estado a sembrar</dt><dd>Solo catálogos</dd></div>
+      <div><dt>Procedures</dt><dd>9</dd></div>
+    </dl>
+
+    <p>Se evalúan como una función: fijas el estado de catálogos, pasas la tupla de entrada y comparas la tupla de salida. Es la capa más barata de construir y la que más regresiones atrapa por unidad de esfuerzo.</p>
+    <p>Un detalle del arnés que muerde: la columna «Clase» decide cómo se invoca. Un <em>executable</em> se llama con <code>EXECUTE PROCEDURE ... RETURNING_VALUES</code>; un <em>selectable</em> con <code>SELECT ... FROM proc(...)</code>. Llamar a <code>CALC_TOTALES_DOCTO_PV</code> con <code>EXECUTE PROCEDURE</code> falla con <em>output parameter mismatch</em> a menos que declares sus trece salidas.</p>
+
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr>
+          <th scope="col">Procedure</th><th scope="col">Clase</th>
+          <th scope="col" class="r">In</th><th scope="col" class="r">Out</th><th scope="col" class="r">Deps</th>
+          <th scope="col">Por qué vale</th>
+        </tr></thead>
+        <tbody>
+          <tr class="destaca">
+            <td class="sp">CALC_TOTALES_DOCTO_PV</td><td class="num">selectable</td>
+            <td class="num">4</td><td class="num">13</td><td class="num">15</td>
+            <td class="por">Con <code>V_SOLO_LECTURA = 'S'</code> es una función pura sobre el documento. Subtotal, descuentos, neto, impuestos y retenciones RESICO en una sola llamada. El candidato de mayor valor del módulo.</td>
+          </tr>
+          <tr>
+            <td class="sp">GET_PRECIO_ARTCLI</td><td class="num">executable</td>
+            <td class="num">4</td><td class="num">5</td><td class="num">12</td>
+            <td class="por">Resuelve política vigente, excepciones por cliente, tipo y zona, precio de lista y conversión de moneda. Toda la lógica de precios.</td>
+          </tr>
+          <tr>
+            <td class="sp">GET_DSCTO_ART</td><td class="num">executable</td>
+            <td class="num">7</td><td class="num">8</td><td class="num">4</td>
+            <td class="por">Superficie de salida amplísima: descuentos por cliente, volumen y promoción.</td>
+          </tr>
+          <tr>
+            <td class="sp">CHECA_PRECIO_MIN</td><td class="num">executable</td>
+            <td class="num">8</td><td class="num">4</td><td class="num">8</td>
+            <td class="por">Función de decisión pura: el código devuelto distingue si falló el descuento o el precio. Ideal para una tabla de casos frontera.</td>
+          </tr>
+          <tr>
+            <td class="sp">GET_DSCTO_MAX_ART</td><td class="num">executable</td>
+            <td class="num">4</td><td class="num">2</td><td class="num">10</td>
+            <td class="por">El techo de descuento que alimenta al anterior.</td>
+          </tr>
+          <tr>
+            <td class="sp">VALIDA_FACTOR_VENTA</td><td class="num">selectable</td>
+            <td class="num">2</td><td class="num">3</td><td class="num">3</td>
+            <td class="por">Pocas entradas y reglas discretas: cobertura completa es barata.</td>
+          </tr>
+          <tr>
+            <td class="sp">CONVIERTE_PRECIO_UNIT</td><td class="num">executable</td>
+            <td class="num">6</td><td class="num">1</td><td class="num">4</td>
+            <td class="por">Conversión de moneda. Aritmética y redondeo.</td>
+          </tr>
+          <tr>
+            <td class="sp">GET_FORMAS_COBRO_DOCTOS_PV</td><td class="num">selectable</td>
+            <td class="num">1</td><td class="num">4</td><td class="num">6</td>
+            <td class="por">Devuelve un conjunto: convencionales por sucursal más activadoras, excluyendo las que ya forman parte de una activadora. El oráculo es el conjunto ordenado.</td>
+          </tr>
+          <tr>
+            <td class="sp">JUST_INT</td><td class="num">executable</td>
+            <td class="num">2</td><td class="num">1</td><td class="num">1</td>
+            <td class="por">Trivial, pero el formato del folio <code>cv</code> depende de él.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="nivel">
+    <div class="nivel-head">
+      <span class="nivel-num">NIVEL 2</span>
+      <h2>Lectores de estado del documento</h2>
+    </div>
+    <dl class="meta">
+      <div><dt>Oráculo</dt><dd>Conjunto de filas</dd></div>
+      <div><dt>Costo del arnés</dt><dd>Medio</dd></div>
+      <div><dt>Estado a sembrar</dt><dd>Documento completo</dd></div>
+      <div><dt>Procedures</dt><dd>3</dd></div>
+    </dl>
+
+    <p>Leen sin escribir, pero su salida depende del documento entero y no de parámetros escalares. El caso golden es un par: documento sembrado y salida esperada.</p>
+
+    <ul class="items">
+      <li><div class="nom">EXIS_VTA_PV<small>selectable · 7 deps</small></div><div>
+        <p>Conjunto de artículos que quedarían en existencia negativa. Su valor está en los casos frontera: existencia exacta, con orden de venta fuente, artículo no almacenable.</p></div></li>
+      <li><div class="nom">SERIES_DUP_DOCTO_PV<small>selectable · 6 deps</small></div><div>
+        <p>Detección de series repetidas en más de un renglón. Determinista y fácil de sembrar: el desglose de discretos es la única entrada que importa.</p></div></li>
+      <li><div class="nom">AGRUPA_PARTIDAS_DOCTO_PV<small>executable · 12 deps</small></div><div>
+        <p>Concentración de partidas del mismo artículo. Doce dependencias lo hacen muy sensible a cambios en el detalle.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="nivel">
+    <div class="nivel-head">
+      <span class="nivel-num">NIVEL 3</span>
+      <h2>Mutadores</h2>
+    </div>
+    <dl class="meta">
+      <div><dt>Oráculo</dt><dd>Delta de tablas</dd></div>
+      <div><dt>Costo del arnés</dt><dd>Alto</dd></div>
+      <div><dt>Estado a sembrar</dt><dd>Catálogos + documento + registry</dd></div>
+      <div><dt>Procedures</dt><dd>7</dd></div>
+    </dl>
+
+    <p>Aquí el valor esperado no es una tupla sino el conjunto de filas que aparecieron, cambiaron o desaparecieron. Es más caro de montar, y es donde vive el riesgo real.</p>
+
+    <ul class="items">
+      <li><div class="nom">APLICA_VTA_PV<small>executable · 9 deps</small></div><div>
+        <p>El delta a capturar abarca <code>DOCTOS_IN</code> y <code>DOCTOS_IN_DET</code>, <code>DOCTOS_CC</code> con <code>IMPORTES_DOCTOS_CC</code> y <code>VENCIMIENTOS_CARGOS_CC</code>, <code>SALDOS_IN</code>, <code>SALDOS_CC</code>, <code>COMPROM_ARTICULOS</code>, <code>MOVTOS_EFVO_CAJA</code>, <code>DOCTOS_ENTRE_SIS</code> y las <code>UNIDADES_SURT</code> de la orden fuente.</p></div></li>
+      <li><div class="nom">GENERA_DOCTO_CC_PV<small>executable · 22 deps</small></div><div>
+        <p>La cuenta de dependencias más alta de todas. Justifica casos propios además de los que hereda de <code>APLICA_VTA_PV</code>: cargo solo, cargo más pago, y la rama del cliente eventual en la que no genera nada.</p></div></li>
+      <li><div class="nom">GENERA_DOCTO_IN_PV<small>executable · 13 deps</small></div><div>
+        <p>Copia el detalle a Inventarios con su desglose de discretos y pedimentos, y actualiza la garantía de las series.</p></div></li>
+      <li><div class="nom">COSTEA_MOVTO_SALIDA<small>executable · 12 deps</small></div><div>
+        <p>El más difícil de fijar: arrastra el histórico de entradas del almacén. Probablemente merece su propio dataset, con el almacén sembrado desde cero y un solo método de costeo por caso.</p></div></li>
+      <li><div class="nom">AFECTA_SALDOS_CC<br>AFECTA_SALDOS_IN<br>AFECTA_UNID_COMPROM<small>executable · 7 / 3 / 1 deps</small></div><div>
+        <p>Deltas de una sola tabla cada uno. Baratísimos de verificar y muy buenos como red de seguridad por debajo de los anteriores: si uno de estos se rompe, el fallo es inequívoco.</p></div></li>
+      <li><div class="nom">REGISTRA_IMPORTE_CC<small>executable · 12 deps</small></div><div>
+        <p>Sus casos interesantes son <strong>excepciones</strong>: importe que excede el saldo por acreditar o el saldo del cargo acreditado. El valor esperado es el error, no una fila.</p></div></li>
+      <li><div class="nom">CUADRA_DISCRETOS_PV<small>executable · 8 deps</small></div><div>
+        <p>El delta son los renglones que inserta bajo las claves especiales <code>SIN LOTE</code> y <code>SIN SERIE</code> por la diferencia de unidades.</p></div></li>
+    </ul>
+  </section>
+
+  <section class="bloque">
+    <span class="marca">Matriz de cobertura</span>
+    <h2>Los ejes que de verdad bifurcan</h2>
+    <p>Salieron del trazado de la operación. Cada uno cambia el camino de ejecución, no solo los números.</p>
+
+    <div class="ejes">
+      <div class="eje">
+        <h3>Cliente eventual</h3>
+        <div class="ram"><span>eventual</span><span>normal</span></div>
+        <p>Bifurca <code>GENERA_DOCTO_CC_PV</code> por completo: con el eventual no hay cargo.</p>
+      </div>
+      <div class="eje">
+        <h3>Banderas de integración</h3>
+        <div class="ram"><span>IN=S CC=S</span><span>IN=S CC=N</span><span>IN=N CC=S</span><span>IN=N CC=N</span></div>
+        <p>Con ambas en <code>'N'</code>, aplicar la venta solo cambia su estatus.</p>
+      </div>
+      <div class="eje">
+        <h3>Impuesto incluido</h3>
+        <div class="ram"><span>S</span><span>N</span></div>
+        <p>Cambia toda la aritmética de <code>CALC_TOTALES_DOCTO_PV</code>.</p>
+      </div>
+      <div class="eje">
+        <h3>Régimen RESICO</h3>
+        <div class="ram"><span>persona física</span><span>persona moral</span><span>no RESICO</span></div>
+        <p>Activa o no las retenciones vía <code>PKG_RESICOS</code>.</p>
+      </div>
+      <div class="eje">
+        <h3>Moneda</h3>
+        <div class="ram"><span>local</span><span>extranjera</span></div>
+        <p>Tipo de cambio, y la diferencia entre <code>IMPORTE</code> e <code>IMPORTE_MON_DOC</code>.</p>
+      </div>
+      <div class="eje">
+        <h3>Seguimiento del artículo</h3>
+        <div class="ram"><span>sin</span><span>por lote</span><span>por serie</span></div>
+        <p>Determina si <code>CUADRA_DISCRETOS_PV</code> hace algo.</p>
+      </div>
+      <div class="eje">
+        <h3>Documento fuente</h3>
+        <div class="ram"><span>venta directa</span><span>desde orden</span><span>venta retenida</span></div>
+        <p>Unidades surtidas, comprometidas y recálculo de estatus del fuente.</p>
+      </div>
+      <div class="eje">
+        <h3>Descuento</h3>
+        <div class="ram"><span>sin</span><span>por política</span><span>manual</span><span>extra</span><span>Mix &amp; Match</span></div>
+        <p>El manual apaga las políticas; el extra tiene reglas propias de validación.</p>
+      </div>
+      <div class="eje">
+        <h3>Forma de cobro</h3>
+        <div class="ram"><span>efectivo</span><span>crédito 'R'</span><span>tarjeta</span><span>varias</span><span>sobrado</span></div>
+        <p>El crédito exige permiso; la tarjeta mete autorización bancaria en el camino.</p>
+      </div>
+      <div class="eje">
+        <h3>Método de costeo</h3>
+        <div class="ram"><span>P</span><span>otros</span></div>
+        <p>En la base demo está en <code>'P'</code>. Los demás valores son casos aparte.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <span class="marca">Reproducibilidad</span>
+    <h2>Qué neutralizar y qué afirmar</h2>
+    <p>Un golden dataset sobre este esquema falla por no determinismo antes que por lógica. A la izquierda, lo que hay que fijar; a la derecha, las afirmaciones que resisten aunque cambien los identificadores.</p>
+
+    <div class="par">
+      <div class="col riesgo">
+        <h3>Fuentes de no determinismo</h3>
+        <ul>
+          <li><b>GEN_ID(ID_DOCTOS)</b> — todos los identificadores cambian en cada corrida. Compáralos estructuralmente («¿existe una liga PV→IN?») o normalízalos a ids relativos al caso.</li>
+          <li><b>GEN_FOLIO_COBROS_VENTAS</b> — contador circular global: el folio <code>cv</code> nunca se repite. Compara el patrón, no el valor.</li>
+          <li><b>Reloj y usuario</b> — <code>CURRENT_DATE</code>, <code>CURRENT_TIME</code>, <code>FECHA_SERVIDOR</code> y <code>CURRENT_USER</code> hay que congelarlos o pasarlos explícitos.</li>
+          <li><b>REGISTRY es entrada, no entorno</b> — <code>INTEG_IN_PV</code>, <code>INTEG_CC_PV</code>, <code>CLIENTE_EVENTUAL_PV_ID</code> y <code>METODO_COSTEO</code> deben formar parte del fixture y fijarse al sembrar. Si no, el mismo caso da resultados distintos en dos bases.</li>
+          <li><b>Orden de filas</b> — los selectables sin <code>ORDER BY</code> no garantizan orden.</li>
+        </ul>
+      </div>
+      <div class="col inv">
+        <h3>Invariantes a afirmar</h3>
+        <ul>
+          <li>El documento cuadra contra lo cobrado.
+            <code class="formula">IMPORTE_NETO + TOTAL_IMPUESTOS − TOTAL_RETENCIONES = Σ cobros</code></li>
+          <li>El efectivo de caja cuadra contra el documento.
+            <code class="formula">Σ MOVTOS_EFVO_CAJA.IMPORTE = total cobrado</code></li>
+          <li>El inventario baja exactamente lo vendido.
+            <code class="formula">existencia_después = existencia_antes − unidades</code></li>
+          <li>La cartera se mueve por el cargo generado.
+            <code class="formula">Δ SALDOS_CC.CARGOS_CXC = importe del cargo</code></li>
+          <li><b>Aplicar y desaplicar es la identidad.</b> La más potente de todas: cubre <code>DESAPLICA_DOCTO_PV</code> gratis y no depende de ningún identificador.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <span class="marca">Caso trabajado</span>
+    <h2>Caso 001 — venta liquidada en efectivo</h2>
+    <p>El caso base que produce <code>muestra_venta_mostrador.sql</code>. Todos los valores están derivados del esquema y de los catálogos de la base demo; ninguno es inventado.</p>
+
+    <div class="verif">
+      <b>Ejecutado y verificado — 11 de septiembre de 2026</b>
+      <p>El guion se corrió completo contra <code>APPCO.FDB</code> y <strong>los valores esperados coincidieron uno a uno</strong>, incluido el renglón de <code>SALDOS_CC</code> que estaba marcado como pendiente. La corrida de prueba se revirtió con el paso 7 y dejó la base idéntica: existencia de vuelta en 20, capas restauradas.</p>
+      <p>El caso quedó después sembrado de forma permanente, sin limpieza: documento <code>44209</code>, folio <code>PRUEBA001</code>, con <code>DOCTOS_IN 44212</code>, cargo <code>DOCTOS_CC 44214</code> y pago <code>44217</code> (folio <code>cv0000012</code>). Sirve como línea base viva contra la cual comparar.</p>
+    </div>
+
+    <dl class="caso-meta">
+      <div><dt>Artículo</dt><dd>7672 · A06<em>almacenable, sin seguimiento</em></dd></div>
+      <div><dt>Unidades</dt><dd>3</dd></div>
+      <div><dt>Precio unitario</dt><dd>100.00<em>respaldo del guion: el artículo no tiene renglón en PRECIOS_ARTICULOS</em></dd></div>
+      <div><dt>Impuesto</dt><dd>IVA 16 · id 684<em>tipo P, trasladado</em></dd></div>
+      <div><dt>Cliente</dt><dd>565<em>RFC ESA9802048W0, sin régimen RESICO → sin retenciones</em></dd></div>
+      <div><dt>Método de costeo</dt><dd>'P' = PEPS<em>en COSTEA_SALIDA_IN solo 'C' es promedio</em></dd></div>
+    </dl>
+
+    <p class="subt">Salidas esperadas</p>
+
+    <div class="salidas">
+
+      <div class="sal">
+        <h3><span>CALC_TOTALES_DOCTO_PV</span><em>Nivel 1</em></h3>
+        <dl>
+          <div class="row"><dt>NUM_RENGLONES</dt><dd>1</dd></div>
+          <div class="row"><dt>NUM_ARTICULOS</dt><dd>3</dd></div>
+          <div class="row"><dt>SUBTOTAL</dt><dd>300.00</dd></div>
+          <div class="row"><dt>DSCTO_ARTS</dt><dd>0.00</dd></div>
+          <div class="row"><dt>DSCTO_EXTRA_IMPORTE</dt><dd>0.00</dd></div>
+          <div class="row"><dt>IMPORTE_NETO</dt><dd>300.00</dd></div>
+          <div class="row"><dt>TOTAL_IMPUESTOS</dt><dd>48.00</dd></div>
+          <div class="row"><dt>TOTAL_RETENCIONES</dt><dd>0.00</dd></div>
+          <div class="row"><dt>TOTAL_A_PAGAR</dt><dd class="res">348.00</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>DOCTOS_PV_COBROS</span><em>1 fila</em></h3>
+        <dl>
+          <div class="row"><dt>TIPO</dt><dd>'C'</dd></div>
+          <div class="row"><dt>FORMA_COBRO_ID</dt><dd>983</dd></div>
+          <div class="row"><dt>IMPORTE</dt><dd>348.00</dd></div>
+          <div class="row"><dt>TIPO_CAMBIO</dt><dd>1</dd></div>
+          <div class="row"><dt>IMPORTE_MON_DOC</dt><dd>348.00</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>MOVTOS_EFVO_CAJA</span><em>1 fila</em></h3>
+        <dl>
+          <div class="row"><dt>CAJA_ID</dt><dd>1058</dd></div>
+          <div class="row"><dt>FORMA_COBRO_ID</dt><dd>983</dd></div>
+          <div class="row"><dt>IMPORTE</dt><dd class="res">+348.00</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>DOCTOS_IN + _DET</span><em>1 + 1 filas</em></h3>
+        <dl>
+          <div class="row"><dt>NATURALEZA_CONCEPTO</dt><dd>'S'</dd></div>
+          <div class="row"><dt>ALMACEN_ID</dt><dd>220</dd></div>
+          <div class="row"><dt>APLICADO</dt><dd>'S'</dd></div>
+          <div class="row"><dt>UNIDADES</dt><dd>3</dd></div>
+          <div class="row"><dt>COSTO_UNITARIO</dt><dd class="res">300.00</dd></div>
+          <div class="row"><dt>COSTO_TOTAL</dt><dd class="res">900.00</dd></div>
+          <div class="row"><dt>COSTEO_PEND</dt><dd>'N'</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>USOS_CAPAS_COSTOS</span><em>1 fila</em></h3>
+        <dl>
+          <div class="row"><dt>CAPA_ID</dt><dd>6</dd></div>
+          <div class="row"><dt>UNIDADES</dt><dd>3</dd></div>
+          <div class="row"><dt>VALOR_TOTAL</dt><dd>900.00</dd></div>
+          <div class="row"><dt>TIPO_USO</dt><dd>'S'</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>SALDOS_IN</span><em>fila del mes en curso</em></h3>
+        <dl>
+          <div class="row"><dt>SALIDAS_UNIDADES</dt><dd>3</dd></div>
+          <div class="row"><dt>SALIDAS_COSTO</dt><dd>900.00</dd></div>
+          <div class="row"><dt>existencia total</dt><dd class="res">20 → 17</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>DOCTOS_CC · cargo</span><em>1 + 1 filas</em></h3>
+        <dl>
+          <div class="row"><dt>FOLIO</dt><dd>'PRUEBA001'</dd></div>
+          <div class="row"><dt>CLIENTE_ID</dt><dd>565</dd></div>
+          <div class="row"><dt>ESTATUS</dt><dd>'N'</dd></div>
+          <div class="row"><dt>CANCELADO / APLICADO</dt><dd>'N' / 'S'</dd></div>
+          <div class="row"><dt>TIPO_IMPTE</dt><dd>'C'</dd></div>
+          <div class="row"><dt>IMPORTE</dt><dd>300.00</dd></div>
+          <div class="row"><dt>IMPUESTO</dt><dd>48.00</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>DOCTOS_CC · pago</span><em>1 + 1 filas</em></h3>
+        <dl>
+          <div class="row"><dt>FOLIO</dt><dd class="var">cv + 7 dígitos</dd></div>
+          <div class="row"><dt>CLIENTE_ID</dt><dd>565</dd></div>
+          <div class="row"><dt>TIPO_IMPTE</dt><dd>'R'</dd></div>
+          <div class="row"><dt>IMPORTE</dt><dd>348.00</dd></div>
+          <div class="row"><dt>IMPUESTO</dt><dd>0.00</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>DOCTOS_ENTRE_SIS</span><em>3 filas</em></h3>
+        <dl>
+          <div class="row"><dt>PV → IN</dt><dd>TIPO_DOCTO 'V'</dd></div>
+          <div class="row"><dt>PV → CC</dt><dd>TIPO_DOCTO 'C'</dd></div>
+          <div class="row"><dt>PV → CC</dt><dd>TIPO_DOCTO 'R'</dd></div>
+        </dl>
+      </div>
+
+      <div class="sal">
+        <h3><span>SALDOS_CC</span><em>fila nueva del mes</em></h3>
+        <dl>
+          <div class="row"><dt>CLIENTE_ID</dt><dd>565</dd></div>
+          <div class="row"><dt>CARGOS_CXC</dt><dd>348.00</dd></div>
+          <div class="row"><dt>CREDITOS_CXC</dt><dd>348.00</dd></div>
+          <div class="row"><dt>saldo neto</dt><dd class="res">0.00</dd></div>
+        </dl>
+      </div>
+
+    </div>
+
+    <p class="subt">Cómo se costea: capas vivas del artículo 7672 en el almacén 220</p>
+    <p>Las capas son desiguales, así que el método de costeo cambia el resultado. <code>GET_CAPAS_COSTEO</code> las entrega en orden PEPS y las 3 unidades salen enteras de la primera.</p>
+
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr>
+          <th scope="col">Capa</th><th scope="col">Fecha</th>
+          <th scope="col" class="r">Existencia</th><th scope="col" class="r">Valor total</th>
+          <th scope="col" class="r">Costo unitario</th><th scope="col">Efecto del caso</th>
+        </tr></thead>
+        <tbody>
+          <tr class="destaca">
+            <td class="sp">6</td><td class="num">2025-10-14</td>
+            <td class="num">10</td><td class="num">3 000.00</td><td class="num">300.00</td>
+            <td class="por">Se toman 3 unidades por 900.00. Queda en <strong>7 unidades / 2 100.00</strong>.</td>
+          </tr>
+          <tr>
+            <td class="sp">9</td><td class="num">2025-10-15</td>
+            <td class="num">10</td><td class="num">1 000.00</td><td class="num">100.00</td>
+            <td class="por">Intacta.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avisos">
+      <div class="aviso">
+        <b>El margen es negativo a propósito</b>
+        <p>La venta sale a 100 y cuesta 300: −600 de margen. Sirve para probar la mecánica, pero no es un caso comercialmente verosímil. Para uno realista hay que darle al artículo un precio por encima de 300.</p>
+      </div>
+      <div class="aviso">
+        <b>El mismo caso con costeo promedio da otro número</b>
+        <p>Con <code>METODO_COSTEO = 'C'</code>, las mismas 3 unidades costarían 200.00 cada una y 600.00 en total, porque el promedio de las capas vivas es 4 000 / 20. Ese par de valores es lo que hace valioso el eje de costeo: un solo cambio de registry mueve el resultado.</p>
+      </div>
+      <div class="aviso">
+        <b>LOG_SWG no se revierte</b>
+        <p><code>COSTEA_MOVTO_SALIDA</code> inserta un trazo de depuración en <code>LOG_SWG</code> dentro de una <strong>transacción autónoma</strong>, en cada salida que no sea juego. Es una fila más de delta que hay que ignorar o afirmar explícitamente.</p>
+        <p>Comprobado en la corrida: la tabla pasó de 94 a 95 filas al aplicar, y <strong>se quedó en 95 tras borrar el documento</strong>. Todo lo demás revirtió; esto no.</p>
+      </div>
+    </div>
+
+    <p class="subt">Lo que no se puede fijar en este caso</p>
+    <p>Todos los identificadores —<code>DOCTO_PV_ID</code>, <code>DOCTO_IN_ID</code>, <code>DOCTO_CC_ID</code>, el <code>DOCTO_IN_DET_ID</code> del uso de capa—, el consecutivo del folio <code>cv</code> y la fecha y hora, que vienen de <code>CURRENT_DATE</code>. Se comparan por estructura, no por valor.</p>
+  </section>
+
+  <div class="arranque">
+    <div class="arranque-cap">Recomendación &mdash; <b>por dónde empezar</b></div>
+    <div class="arranque-cuerpo">
+      <p>Armar primero el <strong>nivel 1 completo</strong>. Son nueve procedures, todos con arnés trivial —un <code>SELECT</code> o un <code>EXECUTE PROCEDURE ... RETURNING_VALUES</code>— y ninguno necesita sembrar estado más allá de catálogos. Con <code>CALC_TOTALES_DOCTO_PV</code> cubriendo los ejes de impuesto incluido y RESICO, eso da cobertura real en una tarde.</p>
+      <p>El nivel 3 se monta después sobre el guion que ya existe: <code>muestra_venta_mostrador.sql</code> es literalmente la plantilla de un caso golden —siembra, dispara, verifica, limpia—. Convertirlo en un generador parametrizado por los ejes de la matriz es el paso natural, y su paso 6 ya es el recolector del delta.</p>
+      <p>El nivel 2 puede esperar: sus tres procedures quedan ejercitados de paso por los casos del nivel 3, y solo merecen entradas propias en los casos frontera que sean difíciles de alcanzar desde una venta completa.</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <h3>Procedencia</h3>
+    <p>La clase de cada procedure (<em>selectable</em> o <em>executable</em>), el número de parámetros de entrada y salida y la cuenta de dependencias se leyeron de <code>RDB$PROCEDURES</code>, <code>RDB$PROCEDURE_PARAMETERS</code> y <code>RDB$DEPENDENCIES</code> en el servidor Firebird. La cuenta de dependencias es de objetos distintos de los que depende el procedure, y se usa aquí como proxy del radio de impacto, no como métrica exacta de complejidad.</p>
+    <p>Los ejes de la matriz salen del trazado de la operación documentado aparte, en <em>Venta de Mostrador</em>.</p>
+    <p>Los valores del Caso 001 se derivaron primero del esquema —el impuesto del artículo con <code>LISTA_IMPTOS_ART</code>, las capas vivas con <code>GET_CAPAS_COSTEO</code>, el régimen del cliente de <code>DIRS_CLIENTES</code> y el método de costeo de <code>REGISTRY</code>— y después <strong>se comprobaron ejecutando el guion</strong> contra <code>APPCO.FDB</code> con <code>isql</code>. Los veintitantos valores de las tarjetas coincidieron uno a uno con lo predicho.</p>
+  </div>
+
+</div>

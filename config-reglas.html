@@ -1,0 +1,603 @@
+<title>Reglas de negocio de CONFIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper:#EFF2F1;
+    --surface:#FFFFFF;
+    --panel:#F6F8F7;
+    --ink:#111A1B;
+    --muted:#5C6E70;
+    --faint:#8A9B9C;
+    --line:#D3DCDA;
+    --line-strong:#B3C2C0;
+    --accent:#0E6B63;
+    --accent-soft:#DCEBE8;
+    --flag:#A6472B;
+    --flag-soft:#F4E3DC;
+    --edge:#4A5D5F;
+    --shadow:0 1px 2px rgba(17,26,27,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0D1315;
+      --surface:#161F21;
+      --panel:#131C1E;
+      --ink:#E6EDEC;
+      --muted:#96A8A9;
+      --faint:#6E8082;
+      --line:#263335;
+      --line-strong:#35474A;
+      --accent:#54B9AB;
+      --accent-soft:#12302E;
+      --flag:#E28C66;
+      --flag-soft:#33211A;
+      --edge:#8CA1A3;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0D1315;
+    --surface:#161F21;
+    --panel:#131C1E;
+    --ink:#E6EDEC;
+    --muted:#96A8A9;
+    --faint:#6E8082;
+    --line:#263335;
+    --line-strong:#35474A;
+    --accent:#54B9AB;
+    --accent-soft:#12302E;
+    --flag:#E28C66;
+    --flag-soft:#33211A;
+    --edge:#8CA1A3;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    margin:0;
+    padding:0 20px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding-block:52px 96px;}
+  h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;text-wrap:balance;margin:0;}
+  h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.015em;}
+  h2{font-size:clamp(20px,3vw,26px);line-height:1.2;letter-spacing:-.01em;}
+  h3{font-size:16px;line-height:1.3;}
+  p{margin:0;}
+  code,.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);font-weight:500;
+  }
+
+  /* ---------- header ---------- */
+  header.top{display:flex;flex-direction:column;gap:18px;}
+  .lede{font-size:17px;color:var(--muted);max-width:62ch;}
+  .facts{
+    display:flex;flex-wrap:wrap;gap:0;margin-top:14px;
+    border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden;
+  }
+  .fact{flex:1 1 150px;padding:14px 18px;border-right:1px solid var(--line);}
+  .fact:last-child{border-right:0;}
+  .fact b{display:block;font-family:"IBM Plex Mono",monospace;font-size:24px;font-weight:500;
+    line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .fact span{display:block;font-size:12px;color:var(--muted);margin-top:4px;}
+  .fact.good b{color:var(--accent);}
+
+  section{margin-top:64px;}
+  .sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:22px;}
+  .sec-head p{color:var(--muted);max-width:68ch;font-size:14.5px;}
+
+  /* ---------- diagram ---------- */
+  figure{margin:0;}
+  .scroller{
+    overflow-x:auto;background:var(--surface);
+    border:1px solid var(--line);border-radius:3px;padding:10px;
+  }
+  .scroller svg{display:block;min-width:1020px;width:100%;max-width:1320px;height:auto;}
+  figcaption{margin-top:12px;font-size:13px;color:var(--muted);max-width:78ch;}
+
+  .dg-panel{fill:var(--panel);stroke:var(--line);stroke-width:1;}
+  .dg-flagpanel{fill:none;stroke:var(--flag);stroke-width:1.2;stroke-dasharray:7 5;}
+  .dg-box{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2;}
+  .dg-name{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;fill:var(--ink);}
+  .dg-name.sm{font-size:10.5px;}
+  .dg-sub{font-size:10.5px;fill:var(--muted);font-family:"IBM Plex Sans",sans-serif;}
+  .dg-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    fill:var(--accent);font-weight:500;}
+  .dg-eyebrow.flag{fill:var(--flag);}
+  .dg-chip{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--faint);}
+  .dg-lbl{font-size:10.5px;fill:var(--muted);font-family:"IBM Plex Sans",sans-serif;}
+  .dg-edge{stroke:var(--edge);stroke-width:1.5;fill:none;marker-end:url(#ar);}
+  .dg-edge.restrict{stroke-dasharray:6 4;}
+  .dg-edge.nofk{stroke:var(--flag);stroke-dasharray:2 4;marker-end:url(#arf);}
+  .dg-edge.noarrow{marker-end:none;}
+  .dg-rule{stroke:var(--line);stroke-width:1;}
+  .ar-ink{fill:var(--edge);}
+  .ar-flag{fill:var(--flag);}
+
+  /* ---------- docs table ---------- */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:3px;background:var(--surface);}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;}
+  th,td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);font-weight:500;
+    border-bottom:1px solid var(--line-strong);white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:0;}
+  td.file{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink);white-space:nowrap;}
+  td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+    text-align:right;color:var(--accent);font-weight:500;white-space:nowrap;}
+  td.cov{color:var(--muted);font-size:13.5px;}
+
+  /* ---------- paths ---------- */
+  .pathblock{background:var(--surface);border:1px solid var(--line);border-radius:3px;
+    padding:18px 20px;margin-top:14px;overflow-x:auto;}
+  .root{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);
+    padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  .root em{font-style:normal;color:var(--accent);}
+  .pathgroup{margin-bottom:18px;}
+  .pathgroup:last-child{margin-bottom:0;}
+  .pathgroup h3{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:8px;}
+  ul.paths{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;}
+  ul.paths li{font-family:"IBM Plex Mono",monospace;font-size:12.5px;white-space:nowrap;
+    color:var(--ink);}
+  ul.paths li .dim{color:var(--faint);}
+  .tag{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;color:var(--accent);
+    background:var(--accent-soft);padding:1px 6px;border-radius:2px;margin-left:8px;
+    letter-spacing:.02em;}
+
+  /* ---------- findings ---------- */
+  ol.findings{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+  ol.findings li{
+    background:var(--surface);border-left:3px solid var(--line-strong);
+    padding:16px 20px 16px 18px;
+  }
+  ol.findings li.flagged{border-left-color:var(--flag);}
+  .f-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:5px;}
+  .f-head h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:15px;}
+  .sev{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;padding:2px 7px;border-radius:2px;white-space:nowrap;}
+  .sev.block{background:var(--flag-soft);color:var(--flag);}
+  .sev.note{background:var(--accent-soft);color:var(--accent);}
+  ol.findings p{font-size:14px;color:var(--muted);max-width:80ch;}
+  ol.findings code{font-size:12.5px;color:var(--ink);}
+
+  .sources{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:3px;
+    background:var(--surface);overflow:hidden;}
+  .src{flex:1 1 230px;padding:16px 20px;border-right:1px solid var(--line);}
+  .src:last-child{border-right:0;}
+  .src b{display:block;font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:500;}
+  .src span{display:block;font-size:12.5px;color:var(--muted);margin-top:5px;}
+
+  footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--faint);}
+
+  @media (max-width:640px){
+    .wrap{padding-block:36px 64px;}
+    .fact{flex-basis:50%;border-bottom:1px solid var(--line);}
+    th,td{padding:11px 14px;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    a{transition:color .15s ease;}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Microsip · docs-microsip · 21 sep 2026</p>
+    <h1>Reglas de negocio de CONFIG</h1>
+    <p class="lede">La base de datos de configuración de cada instalación Microsip quedó documentada:
+      cuatro documentos de negocio en el corpus indexado y cinco anexos técnicos con la
+      implementación. Esto es qué cubre cada uno, dónde quedaron y qué encontré en el camino.</p>
+
+    <div class="facts">
+      <div class="fact"><b>19</b><span>tablas en el esquema</span></div>
+      <div class="fact"><b>38</b><span>reglas de negocio</span></div>
+      <div class="fact"><b>4</b><span>documentos de negocio</span></div>
+      <div class="fact"><b>5</b><span>anexos técnicos</span></div>
+      <div class="fact good"><b>0</b><span>errores de linter</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">El esquema</p>
+      <h2>Qué hay en CONFIG y qué documento lo cubre</h2>
+      <p>Una base por instalación, hermana de las bases de empresa. <code>EMPRESAS</code> y
+        <code>USUARIOS</code> son el eje: casi todo lo demás cuelga de ellas con borrado en cascada,
+        de modo que eliminar una empresa o un usuario arrastra su configuración de canales.</p>
+    </div>
+
+    <figure>
+      <div class="scroller">
+        <svg viewBox="0 0 1320 900" role="img"
+             aria-label="Diagrama del esquema de la base de datos CONFIG: el padrón de empresas y usuarios alimenta por llave foránea en cascada las cuentas de correo y las cuentas de WhatsApp; telemetría, registry, versionado y el repositorio de reportes viven sin llaves foráneas; un bloque de tres tablas de disponibilidad de reportes está desplegado pero sin código en origin/master.">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path class="ar-ink" d="M0,0 L10,5 L0,10 z"/>
+            </marker>
+            <marker id="arf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path class="ar-flag" d="M0,0 L10,5 L0,10 z"/>
+            </marker>
+          </defs>
+
+          <!-- ============ PANEL A · PADRÓN ============ -->
+          <rect class="dg-panel" x="40" y="56" width="380" height="374" rx="3"/>
+          <text class="dg-eyebrow" x="66" y="86">PADRÓN</text>
+          <text class="dg-chip" x="66" y="104">administracion-de-usuarios-y-acceso-a-empresas</text>
+
+          <rect class="dg-box" x="90" y="120" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="106" y="142">EMPRESAS</text>
+          <text class="dg-sub" x="106" y="157">nombre corto único · índice global</text>
+
+          <rect class="dg-box" x="90" y="196" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="106" y="218">EMPRESAS_USUARIOS</text>
+          <text class="dg-sub" x="106" y="233">lista explícita de acceso</text>
+
+          <rect class="dg-box" x="90" y="272" width="280" height="52" rx="2"/>
+          <text class="dg-name" x="106" y="294">USUARIOS</text>
+          <text class="dg-sub" x="106" y="309">rol o persona · tipo inmutable</text>
+
+          <rect class="dg-box" x="90" y="354" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="106" y="376">DERECHOS_USUARIOS</text>
+          <text class="dg-sub" x="106" y="391">clave del objeto de seguridad</text>
+
+          <path class="dg-edge" d="M180,166 L180,192"/>
+          <text class="dg-lbl" x="188" y="185">acceso</text>
+          <path class="dg-edge" d="M290,272 L290,246"/>
+          <text class="dg-lbl" x="222" y="265" text-anchor="end">acceso</text>
+          <path class="dg-edge" d="M230,324 L230,350"/>
+          <text class="dg-lbl" x="238" y="343">permisos</text>
+          <path class="dg-edge restrict noarrow" d="M370,286 C394,286 394,310 370,310"/>
+          <text class="dg-lbl" x="366" y="337" text-anchor="end">rol_id → sí misma</text>
+
+          <!-- ============ PANEL B · CORREO ============ -->
+          <rect class="dg-panel" x="460" y="56" width="380" height="244" rx="3"/>
+          <text class="dg-eyebrow" x="486" y="86">CORREO</text>
+          <text class="dg-chip" x="486" y="104">cuentas-de-correo-para-envio</text>
+
+          <rect class="dg-box" x="510" y="126" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="526" y="148">SERVIDORES_CORREO</text>
+          <text class="dg-sub" x="526" y="163">nombre único · proveedor de autenticación</text>
+
+          <rect class="dg-box" x="510" y="214" width="280" height="52" rx="2"/>
+          <text class="dg-name" x="526" y="236">CUENTAS_CORREO</text>
+          <text class="dg-sub" x="526" y="251">usuario · empresa · avisos</text>
+
+          <path class="dg-edge" d="M650,172 L650,210"/>
+          <text class="dg-lbl" x="658" y="196">servidor</text>
+
+          <path class="dg-edge" d="M370,136 L426,136 L426,228 L506,228"/>
+          <text class="dg-lbl" x="378" y="130">empresa dueña</text>
+          <path class="dg-edge" d="M370,300 L444,300 L444,250 L506,250"/>
+          <text class="dg-lbl" x="378" y="316">usuario titular</text>
+
+          <!-- ============ PANEL C · WHATSAPP ============ -->
+          <rect class="dg-panel" x="460" y="330" width="380" height="384" rx="3"/>
+          <text class="dg-eyebrow" x="486" y="360">WHATSAPP</text>
+          <text class="dg-chip" x="486" y="378">cuentas-y-plantillas-de-whatsapp</text>
+
+          <rect class="dg-box" x="510" y="400" width="280" height="56" rx="2"/>
+          <text class="dg-name" x="526" y="422">EMPRESAS_CUENTAS_WHATSAPP</text>
+          <text class="dg-sub" x="526" y="437">llave primaria = empresa</text>
+          <text class="dg-sub" x="526" y="450">una sola cuenta por empresa</text>
+
+          <rect class="dg-box" x="510" y="486" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="526" y="508">CUENTAS_WHATSAPP</text>
+          <text class="dg-sub" x="526" y="523">autorización de Meta · 60 días</text>
+
+          <rect class="dg-box" x="510" y="562" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="526" y="584">PLANTILLAS_WHATSAPP</text>
+          <text class="dg-sub" x="526" y="599">imagen o documento · aprobadas</text>
+
+          <rect class="dg-box" x="510" y="638" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="526" y="660">PLANTILLAS_WHATSAPP_SIS</text>
+          <text class="dg-sub" x="526" y="675">un registro por módulo</text>
+
+          <path class="dg-edge" d="M650,486 L650,460"/>
+          <text class="dg-lbl" x="658" y="477">habilitación</text>
+          <path class="dg-edge" d="M650,532 L650,558"/>
+          <text class="dg-lbl" x="658" y="549">plantillas</text>
+          <path class="dg-edge" d="M650,608 L650,634"/>
+          <text class="dg-lbl" x="658" y="625">módulos</text>
+
+          <path class="dg-edge" d="M370,152 L412,152 L412,424 L506,424"/>
+          <text class="dg-lbl" x="378" y="166">habilita</text>
+
+          <!-- ============ PANEL E · REPORTES ============ -->
+          <rect class="dg-panel" x="40" y="460" width="380" height="296" rx="3"/>
+          <text class="dg-eyebrow" x="66" y="490">REPOSITORIO DE REPORTES</text>
+          <text class="dg-chip" x="66" y="508">sin correlato de negocio · anexo técnico</text>
+
+          <rect class="dg-box" x="90" y="524" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="106" y="546">RB_FOLDER</text>
+          <text class="dg-sub" x="106" y="561">carpetas · esquema de ReportBuilder</text>
+
+          <rect class="dg-box" x="90" y="600" width="280" height="46" rx="2"/>
+          <text class="dg-name" x="106" y="622">RB_ITEM</text>
+          <text class="dg-sub" x="106" y="637">plantilla del reporte como binario</text>
+
+          <rect class="dg-box" x="90" y="676" width="280" height="52" rx="2"/>
+          <text class="dg-name" x="106" y="698">BOOKMARKS_REPORTES</text>
+          <text class="dg-sub" x="106" y="713">selección del visor · orden de impresión</text>
+
+          <path class="dg-edge nofk" d="M230,570 L230,596"/>
+          <text class="dg-lbl" x="238" y="588">sin llave foránea</text>
+
+          <!-- ============ PANEL D · TELEMETRÍA ============ -->
+          <rect class="dg-panel" x="880" y="56" width="400" height="184" rx="3"/>
+          <text class="dg-eyebrow" x="906" y="86">TELEMETRÍA</text>
+          <text class="dg-chip" x="906" y="104">telemetria-de-eventos-de-uso</text>
+
+          <rect class="dg-box" x="930" y="126" width="300" height="56" rx="2"/>
+          <text class="dg-name" x="946" y="148">EVENTOS</text>
+          <text class="dg-sub" x="946" y="163">sin llaves foráneas · sin triggers</text>
+          <text class="dg-sub" x="946" y="176">llave única sobre la llave de negocio</text>
+
+          <text class="dg-lbl" x="906" y="212">Se registra en la instalación, no en la empresa:</text>
+          <text class="dg-lbl" x="906" y="227">todos los módulos la alcanzan sin importar a cuál entró el usuario.</text>
+
+          <!-- ============ PANEL G · INFRAESTRUCTURA ============ -->
+          <rect class="dg-panel" x="880" y="270" width="400" height="230" rx="3"/>
+          <text class="dg-eyebrow" x="906" y="300">INFRAESTRUCTURA</text>
+          <text class="dg-chip" x="906" y="318">sin correlato de negocio · anexo técnico</text>
+
+          <rect class="dg-box" x="930" y="340" width="300" height="56" rx="2"/>
+          <text class="dg-name" x="946" y="362">REGISTRY</text>
+          <text class="dg-sub" x="946" y="377">árbol llave / valor · preferencias por usuario</text>
+          <text class="dg-sub" x="946" y="390">borrado del subárbol por trigger</text>
+
+          <rect class="dg-box" x="930" y="426" width="300" height="46" rx="2"/>
+          <text class="dg-name" x="946" y="448">VERSIONES_DB</text>
+          <text class="dg-sub" x="946" y="463">historia de conversiones · paso actual</text>
+
+          <path class="dg-edge nofk noarrow" d="M1230,354 C1256,354 1256,382 1230,382"/>
+          <path class="dg-edge nofk" d="M1000,340 L1000,188"/>
+          <text class="dg-lbl" x="1008" y="258">semáforo de sincronización diaria</text>
+
+          <!-- ============ PANEL F · SIN CÓDIGO ============ -->
+          <rect class="dg-flagpanel" x="880" y="530" width="400" height="282" rx="3"/>
+          <text class="dg-eyebrow flag" x="906" y="560">DISPONIBILIDAD DE REPORTES</text>
+          <text class="dg-chip" x="906" y="578">desplegado en la base · sin código en origin/master</text>
+          <text class="dg-chip" x="906" y="594">no produjo reglas en el corpus</text>
+
+          <rect class="dg-box" x="930" y="612" width="300" height="46" rx="2"/>
+          <text class="dg-name" x="946" y="634">CONFIG_RB_ITEM</text>
+          <text class="dg-sub" x="946" y="649">selección por empresas y por doctos</text>
+
+          <rect class="dg-box" x="930" y="700" width="140" height="46" rx="2"/>
+          <text class="dg-name sm" x="944" y="722">CONFIG_EMPRESAS_DET</text>
+          <text class="dg-sub" x="944" y="736">lista de empresas</text>
+
+          <rect class="dg-box" x="1090" y="700" width="140" height="46" rx="2"/>
+          <text class="dg-name sm" x="1104" y="722">CONFIG_DOCTOS_DET</text>
+          <text class="dg-sub" x="1104" y="736">lista de doctos</text>
+
+          <path class="dg-edge restrict" d="M1000,658 L1000,696"/>
+          <path class="dg-edge restrict" d="M1160,658 L1160,696"/>
+          <text class="dg-lbl" x="1012" y="682">restrict</text>
+          <text class="dg-lbl" x="1172" y="682">restrict</text>
+
+          <text class="dg-lbl" x="906" y="772">CONFIG_EMPRESAS_DET apunta además a EMPRESAS, también con borrado restringido.</text>
+          <text class="dg-lbl" x="906" y="790">El filtro por tipo de documento se activa comparando el nombre de la carpeta contra «FORMAS».</text>
+
+          <!-- ============ LEYENDA ============ -->
+          <line class="dg-rule" x1="40" y1="822" x2="1280" y2="822"/>
+
+          <path class="dg-edge" d="M40,856 L96,856"/>
+          <text class="dg-lbl" x="106" y="860">llave foránea · borrado en cascada</text>
+
+          <path class="dg-edge restrict" d="M330,856 L386,856"/>
+          <text class="dg-lbl" x="396" y="860">llave foránea · borrado restringido</text>
+
+          <path class="dg-edge nofk" d="M640,856 L696,856"/>
+          <text class="dg-lbl" x="706" y="860">dependencia sin llave foránea: la impone un trigger o el código</text>
+        </svg>
+      </div>
+      <figcaption>Las 19 tablas de CONFIG agrupadas por dominio, con el documento de negocio que
+        cubre cada grupo. Lo que el diagrama deja ver y la prosa no: el padrón es el único punto de
+        entrada con borrado en cascada hacia los canales de envío, mientras que telemetría, registry
+        y el repositorio de reportes no tienen ninguna llave foránea — su integridad vive en
+        triggers y en el código de la aplicación.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">El corpus</p>
+      <h2>Los cuatro documentos de negocio</h2>
+      <p>Todos en <code>docs/sistemas/_transversal/</code>, tipo <code>analisis-funcional</code>
+        salvo el de telemetría, que es <code>proceso-negocio</code>. Redactados sin nombres de
+        tablas ni de procedimientos, como exige el estándar del corpus.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Documento</th>
+            <th>Reglas</th>
+            <th>Qué resuelve</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="file">administracion-de-usuarios-y-acceso-a-empresas</td>
+            <td class="num">10</td>
+            <td class="cov">Empresas registradas, usuarios frente a roles, permisos heredados del
+              rol, acceso total o por lista, estatus de baja, facultad de autorizar y la excepción
+              del administrador de la instalación.</td>
+          </tr>
+          <tr>
+            <td class="file">cuentas-de-correo-para-envio</td>
+            <td class="num">9</td>
+            <td class="cov">Servidores y los tres usos de cuenta —personal, institucional y de
+              avisos—, quién puede elegir cada una al enviar, unicidad de la cuenta de avisos y
+              autorización ante el proveedor cuando la exige.</td>
+          </tr>
+          <tr>
+            <td class="file">cuentas-y-plantillas-de-whatsapp</td>
+            <td class="num">10</td>
+            <td class="cov">Autorización ante Meta y su vigencia de 60 días, una sola cuenta por
+              empresa, plantillas aprobadas como único formato de mensaje y habilitación explícita
+              por módulo.</td>
+          </tr>
+          <tr>
+            <td class="file">telemetria-de-eventos-de-uso</td>
+            <td class="num">9</td>
+            <td class="cov">Registro en el ámbito de la instalación, fecha del servidor,
+              acumulación de instancias por periodo, depuración tras sincronizar y envío diario
+              protegido por semáforo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Entregables</p>
+      <h2>Dónde quedó cada archivo</h2>
+      <p>Nueve archivos nuevos y uno modificado. El anexo técnico conserva la correlación 1 a 1 por
+        nombre de archivo que ya usaba el repositorio.</p>
+    </div>
+
+    <div class="pathblock">
+      <div class="root">C:\Users\johan.ortiz\Documents\GitHub\<em>docs-microsip</em>\</div>
+
+      <div class="pathgroup">
+        <h3>Corpus de negocio</h3>
+        <ul class="paths">
+          <li><span class="dim">docs\sistemas\_transversal\</span>administracion-de-usuarios-y-acceso-a-empresas.md</li>
+          <li><span class="dim">docs\sistemas\_transversal\</span>cuentas-de-correo-para-envio.md</li>
+          <li><span class="dim">docs\sistemas\_transversal\</span>cuentas-y-plantillas-de-whatsapp.md</li>
+          <li><span class="dim">docs\sistemas\_transversal\</span>telemetria-de-eventos-de-uso.md</li>
+        </ul>
+      </div>
+
+      <div class="pathgroup">
+        <h3>Anexo técnico</h3>
+        <ul class="paths">
+          <li><span class="dim">archivo-tecnico\sistemas\_transversal\</span>administracion-de-usuarios-y-acceso-a-empresas.md</li>
+          <li><span class="dim">archivo-tecnico\sistemas\_transversal\</span>cuentas-de-correo-para-envio.md</li>
+          <li><span class="dim">archivo-tecnico\sistemas\_transversal\</span>cuentas-y-plantillas-de-whatsapp.md</li>
+          <li><span class="dim">archivo-tecnico\sistemas\_transversal\</span>telemetria-de-eventos-de-uso.md</li>
+          <li><span class="dim">archivo-tecnico\sistemas\_transversal\</span>base-de-datos-config.md<span class="tag">modelo completo</span></li>
+        </ul>
+      </div>
+
+      <div class="pathgroup">
+        <h3>Modificado</h3>
+        <ul class="paths">
+          <li><span class="dim">archivo-tecnico\</span>INDICE.md<span class="tag">nueva sección de correlación</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Hallazgos</p>
+      <h2>Cinco cosas que salieron en el camino</h2>
+      <p>Ninguna bloquea los documentos, pero tres afectan a las herramientas con las que se
+        consultan y una deja trabajo pendiente en el corpus.</p>
+    </div>
+
+    <ol class="findings">
+      <li class="flagged">
+        <div class="f-head">
+          <h3>El servidor de docs-microsip no está leyendo el corpus</h3>
+          <span class="sev block">bloquea</span>
+        </div>
+        <p>Su ruta de documentos apunta a <code>C:\docs-microsip\docs</code>, carpeta que solo
+          contiene <code>mcp-server\</code>. El corpus real vive en
+          <code>…\Documents\GitHub\docs-microsip\docs</code>. Mientras no se corrija, las búsquedas
+          de reglas responden vacío y no hay forma de reindexar lo nuevo.</p>
+      </li>
+      <li class="flagged">
+        <div class="f-head">
+          <h3>El servidor de CONFIG no tiene modelo ER/Studio configurado</h3>
+          <span class="sev block">bloquea</span>
+        </div>
+        <p>Sin la variable del archivo de modelo, la consulta de documentación de tabla resuelve
+          contra el modelo de la base de empresa y responde «not found» para toda tabla de CONFIG.
+          Extraje el modelo directamente de
+          <code>C:\erstudio\model\config\Config.DM1</code>; de ahí salieron las notas de negocio
+          más ricas de todo el trabajo.</p>
+      </li>
+      <li class="flagged">
+        <div class="f-head">
+          <h3>Tres tablas desplegadas sin código fuente</h3>
+          <span class="sev block">pendiente</span>
+        </div>
+        <p>La configuración de disponibilidad de reportes por empresa y tipo de documento existe en
+          el esquema y en artefactos compilados, pero su código no está versionado en ninguna rama.
+          Por la regla de procedencia del estándar no generé reglas de negocio de ese bloque;
+          quedó registrado en el anexo con cuatro observaciones, incluida una que conviene revisar:
+          renombrar la carpeta de formas desactiva el filtro por documento en silencio.</p>
+      </li>
+      <li>
+        <div class="f-head">
+          <h3>El clon de docs-microsip no tiene metadatos de git</h3>
+          <span class="sev note">operativo</span>
+        </div>
+        <p>No hay <code>.git</code> en esa copia, así que los diez archivos están solo en el árbol
+          de trabajo. Para versionarlos hay que copiarlos a un clon con historia.</p>
+      </li>
+      <li>
+        <div class="f-head">
+          <h3>El modelo ER/Studio tiene un desfase contra la base viva</h3>
+          <span class="sev note">menor</span>
+        </div>
+        <p>Documenta la columna del número de WhatsApp con un nombre que ya no existe en el
+          esquema desplegado. El modelo cubre 14 de las 19 tablas: le faltan el repositorio de
+          reportes y el bloque sin código.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Procedencia</p>
+      <h2>De dónde salió cada afirmación</h2>
+    </div>
+    <div class="sources">
+      <div class="src">
+        <b>CONFIG.FDB</b>
+        <span>Esquema vivo: tablas, restricciones, triggers, procedimientos, generadores e índices,
+          leídos del catálogo del motor.</span>
+      </div>
+      <div class="src">
+        <b>Config.DM1</b>
+        <span>Modelo ER/Studio: definiciones y notas de negocio por entidad y por atributo — la
+          fuente de las reglas que el esquema no puede expresar.</span>
+      </div>
+      <div class="src">
+        <b>legacy-graph</b>
+        <span>Descripciones de tabla y de columna del grafo de código legado, usadas para contrastar
+          el modelo contra lo que el código entiende.</span>
+      </div>
+      <div class="src">
+        <b>origin/master</b>
+        <span>Código Delphi, verificado archivo por archivo contra la rama integrada, nunca contra
+          el árbol de trabajo.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Validado con el linter del corpus: 67 documentos, 0 errores, 0 avisos, 0 advertencias.
+  </footer>
+
+</div>
